@@ -1,44 +1,49 @@
-﻿using EmployeeDirectoryConsoleApp.Models;
-using EmployeeDirectoryConsoleApp.Services;
-using EmployeeDirectoryConsoleApp.StreamOperations;
-using Microsoft.Extensions.DependencyInjection;
-using System.Security.Authentication.ExtendedProtection;
-using EmployeeDirectoryConsoleApp.Interfaces;
+﻿using EmployeeDirectoryConsoleApp.DataPresentation;
 using EmployeeDirectoryConsoleApp.DataPresentation.Interface;
-using EmployeeDirectoryConsoleApp.DataPresentation;
+using EmployeeDirectoryConsoleApp.Interfaces;
+using EmployeeDirectoryConsoleApp.Presentation;
+using EmployeeDirectoryConsoleApp.Presentation.Interfaces;
+using EmployeeDirectoryConsoleApp.Presentation.Services;
+using EmployeeDirectoryConsoleApp.Services;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace EmployeeDirectoryConsoleApp
 {
 
-    class EmployeeDirectory
+    class Program
     {
-        
 
-        public EmployeeDirectory() { }
+
+        public Program() { }
 
         public static void Main(String[] args)
         {
 
             var services = new ServiceCollection();
-            services.AddSingleton<IEmployeeManager, Services.EmployeeManager>();
-            services.AddSingleton<IRoleManager, RoleManager>();
-            services.AddSingleton<IRoleManagement, RoleManagement>();
-            services.AddSingleton<IEmployeeManagement, EmployeeManagement>();
-            services.AddSingleton<IEmployeePropertyEntries, EmployeePropertyEntries>();
-            services.AddSingleton<IDepartment, Services.Department>();
-            services.AddSingleton<ILocation, Location>();
-            services.AddSingleton<IEmployeeOperations, EmployeeOperations>();
-            services.AddSingleton<IRoleOperations, RoleOperations>();
-            services.AddSingleton<IDepartmentOperations, DepartmentOperations>();
-            services.AddSingleton<ILocationOperations, LocationOperations>();
-            services.AddSingleton<IDepartmentLocationManagement, DepartmentLocationManagement>();
-            services.AddSingleton<IStartApp, StartApp>();
+            services.AddTransient<IEmployeeManager, Services.EmployeeManager>();
+            /*services.AddTransient<IRoleDisplayMenuManagement, RoleDisplayMenuManagement>();*/
+            services.AddTransient<IRoleManager, RoleManager>();
+            services.AddTransient<IRoleManagement, RoleManagement>();
+            services.AddTransient<IEmployeeManagement, EmployeeManagement>();
+            services.AddTransient<IEmployeePropertyEntryManager, EmployeePropertyEntryManager>();
+            services.AddTransient<IDepartmentManager, Services.DepartmentManager>();
+            services.AddTransient<ILocationManager, LocationManager>();
+            services.AddTransient<IEmployeeOperations, EmployeeOperations>();
+            services.AddTransient<IRoleOperations, RoleOperations>();
+            services.AddTransient<IDepartmentOperations, DepartmentOperations>();
+            services.AddTransient<ILocationOperations, LocationOperations>();
+            services.AddTransient<ILocationPropertyEntryManager, LocationPropertyEntryManager>();
+            services.AddTransient<IRolePropertyEntryManager, RolePropertyEntryManager>();
+            services.AddTransient<IDepartmentPropertyEntryManager, DepartmentPropertyEntryManager>();
+            services.AddSingleton<StartApp>();
+          //  services.AddTransient<IStartApp, StartApp>();
+            services.AddTransient<IDisplayMenuManagement, DisplayMenuManagement>();
             var serviceProvider = services.BuildServiceProvider();
-            var startApp=serviceProvider.GetRequiredService<IStartApp>();
-            startApp.Register();
+            var startApp = serviceProvider.GetRequiredService<StartApp>();
+            startApp.Run();
         }
-        
-    
+
+
     }
 
 
