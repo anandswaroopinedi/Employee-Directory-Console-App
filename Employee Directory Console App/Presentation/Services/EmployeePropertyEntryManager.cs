@@ -1,14 +1,5 @@
-﻿using EmployeeDirectoryConsoleApp.Presentation.Interfaces;
-using EmployeeDirectoryConsoleApp.DataPresentation.Interface;
-using EmployeeDirectoryConsoleApp.Interfaces;
-using EmployeeDirectoryConsoleApp.Models;
-using EmployeeDirectoryConsoleApp.StreamOperations;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using EmployeeDirectoryConsoleApp.Models;
+using EmployeeDirectoryConsoleApp.Presentation.Interfaces;
 using EmployeeDirectoryConsoleApp.Validations;
 
 namespace EmployeeDirectoryConsoleApp.Presentation.Services
@@ -16,8 +7,9 @@ namespace EmployeeDirectoryConsoleApp.Presentation.Services
     public class EmployeePropertyEntryManager : IEmployeePropertyEntryManager
     {
         private readonly IRoleManagement _roleManagement;
-        public EmployeePropertyEntryManager(IRoleManagement roleManagement) {
-        _roleManagement = roleManagement;
+        public EmployeePropertyEntryManager(IRoleManagement roleManagement)
+        {
+            _roleManagement = roleManagement;
         }
         public string GetFirstName()
         {
@@ -160,10 +152,10 @@ namespace EmployeeDirectoryConsoleApp.Presentation.Services
             return "None";
 
         }
-        
-        
 
-        
+
+
+
         public static string DisplayEmployeeId(EmployeeModel employee)
         {
             for (int i = 0; i < EmployeeManagement.EmployeeList.Count && EmployeeManagement.EmployeeList[i].Id != employee.Id; i++)

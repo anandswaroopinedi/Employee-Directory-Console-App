@@ -1,16 +1,11 @@
-﻿using EmployeeDirectoryConsoleApp.Presentation.Interfaces;
-using EmployeeDirectoryConsoleApp.DataPresentation.Interface;
+﻿using EmployeeDirectoryConsoleApp.DataPresentation.Interface;
 using EmployeeDirectoryConsoleApp.Interfaces;
 using EmployeeDirectoryConsoleApp.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using EmployeeDirectoryConsoleApp.Presentation.Interfaces;
 
 namespace EmployeeDirectoryConsoleApp.Presentation.Services
 {
-    public class LocationPropertyEntryManager:ILocationPropertyEntryManager
+    public class LocationPropertyEntryManager : ILocationPropertyEntryManager
     {
         private readonly ILocationManager _locationManager;
         private readonly ILocationOperations _locationOperations;

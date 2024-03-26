@@ -1,16 +1,11 @@
-﻿using EmployeeDirectoryConsoleApp.Presentation.Interfaces;
-using EmployeeDirectoryConsoleApp.DataPresentation.Interface;
+﻿using EmployeeDirectoryConsoleApp.DataPresentation.Interface;
 using EmployeeDirectoryConsoleApp.Interfaces;
 using EmployeeDirectoryConsoleApp.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using EmployeeDirectoryConsoleApp.Presentation.Interfaces;
 
 namespace EmployeeDirectoryConsoleApp.Presentation.Services
 {
-    public class DepartmentPropertyEntryManager:IDepartmentPropertyEntryManager
+    public class DepartmentPropertyEntryManager : IDepartmentPropertyEntryManager
     {
         private readonly IDepartmentManager _departmentManager;
         private readonly IDepartmentOperations _departmentOperations;
@@ -27,7 +22,7 @@ namespace EmployeeDirectoryConsoleApp.Presentation.Services
                 Console.WriteLine($"{i + 1}.  {StartApp.DepartmentList[i].Name}");
             }
         }
-        public  string CreateDepartmentRef()
+        public string CreateDepartmentRef()
         {
             DepartmentModel departmentModel = new DepartmentModel();
             _departmentManager.AddDepartment(departmentModel);

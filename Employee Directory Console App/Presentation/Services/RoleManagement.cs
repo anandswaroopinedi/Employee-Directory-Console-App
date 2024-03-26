@@ -1,7 +1,7 @@
-﻿using EmployeeDirectoryConsoleApp.Interfaces;
+﻿using EmployeeDirectoryConsoleApp.DataPresentation.Interface;
+using EmployeeDirectoryConsoleApp.Interfaces;
 using EmployeeDirectoryConsoleApp.Models;
 using EmployeeDirectoryConsoleApp.Presentation.Interfaces;
-using EmployeeDirectoryConsoleApp.StreamOperations;
 
 namespace EmployeeDirectoryConsoleApp.Presentation.Services
 {
@@ -9,10 +9,12 @@ namespace EmployeeDirectoryConsoleApp.Presentation.Services
     {
         public static List<RolesModel> RoleList = new List<RolesModel>();
         /*        public static Role RoleHandler = new Role();*/
-        private readonly IRoleManager Role;
-        public RoleManagement(IRoleManager role)
+        private readonly IRoleManager _role;
+        private readonly IRoleOperations _roleOperations;
+        public RoleManagement(IRoleManager role, IRoleOperations roleOperations)
         {
-            Role = role;
+            _role = role;
+            _roleOperations = roleOperations;
         }
         public static bool CheckRoleExists(string roleName)
         {
@@ -33,9 +35,9 @@ namespace EmployeeDirectoryConsoleApp.Presentation.Services
             {
                 RolesModel roleModel = new RolesModel();
                 roleModel.Name = roleName;
-                Role.AddRole(roleModel);
+                _role.AddRole(roleModel);
                 RoleList.Add(roleModel);
-                ByteStreamOperations.StoreRolesData();
+                _roleOperations.write();
             }
         }
         public void DisplayAll()
@@ -43,7 +45,7 @@ namespace EmployeeDirectoryConsoleApp.Presentation.Services
             Console.WriteLine("{0,-18} {1,-18} {2,-12} {3,-18}", "Role Name", "Department", "Location", "Description");
             for (int i = 0; i < RoleList.Count; i++)
             {
-                Role.Display(RoleList[i]);
+                _role.Display(RoleList[i]);
             }
         }
 

@@ -1,23 +1,17 @@
-﻿using EmployeeDirectoryConsoleApp.Presentation.Interfaces;
-using EmployeeDirectoryConsoleApp.Presentation.Services;
-using EmployeeDirectoryConsoleApp.Interfaces;
+﻿using EmployeeDirectoryConsoleApp.Interfaces;
 using EmployeeDirectoryConsoleApp.Models;
-using EmployeeDirectoryConsoleApp.StreamOperations;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using EmployeeDirectoryConsoleApp.Presentation.Interfaces;
+using EmployeeDirectoryConsoleApp.Presentation.Services;
 
 namespace EmployeeDirectoryConsoleApp.Services
 {
-    public class EmployeeManager:IEmployeeManager
+    public class EmployeeManager : IEmployeeManager
     {
         private readonly IEmployeePropertyEntryManager _employeePropertyEntries;
         private readonly IDepartmentPropertyEntryManager _departmentPropertyEntries;
         private readonly ILocationPropertyEntryManager _locationPropertyEntries;
-        public EmployeeManager(IEmployeePropertyEntryManager employeePropertyEntries,ILocationPropertyEntryManager locationPropertyEntryManager,IDepartmentPropertyEntryManager departmentPropertyEntryManager) {
+        public EmployeeManager(IEmployeePropertyEntryManager employeePropertyEntries, ILocationPropertyEntryManager locationPropertyEntryManager, IDepartmentPropertyEntryManager departmentPropertyEntryManager)
+        {
             _employeePropertyEntries = employeePropertyEntries;
             _departmentPropertyEntries = departmentPropertyEntryManager;
             _locationPropertyEntries = locationPropertyEntryManager;
@@ -73,7 +67,7 @@ namespace EmployeeDirectoryConsoleApp.Services
                 case 10:
                     employee.ManagerId = _employeePropertyEntries.ChooseManager(employee);
                     break;
-                 case 11:
+                case 11:
                     employee.Project = _employeePropertyEntries.GetProjectName();
                     break;
                 default:
@@ -87,7 +81,7 @@ namespace EmployeeDirectoryConsoleApp.Services
         {
             string managerName = GetManagerName(e);
             Console.WriteLine(new string('-', 145));
-            Console.WriteLine("{0,-8} {1,-18} {2,-12} {3,-18} {4,-12} {5,-12} {6,-12} {7,-12} {8,-12} {9,-15} {10,-12} ", e.Id,e.FirstName+" "+e.LastName, e.DateOfBirth,e.Email, e.MobileNumber, e.JoinDate, e.Location, e.JobTitle, e.Department, managerName, e.Project);           
+            Console.WriteLine("{0,-8} {1,-18} {2,-12} {3,-18} {4,-12} {5,-12} {6,-12} {7,-12} {8,-12} {9,-15} {10,-12} ", e.Id, e.FirstName + " " + e.LastName, e.DateOfBirth, e.Email, e.MobileNumber, e.JoinDate, e.Location, e.JobTitle, e.Department, managerName, e.Project);
         }
         public void Delete(EmployeeModel e)
         {
@@ -95,11 +89,11 @@ namespace EmployeeDirectoryConsoleApp.Services
         }
         public static string GetManagerName(EmployeeModel e)
         {
-            for(int i = 0; i < EmployeeManagement.EmployeeList.Count; i++)
+            for (int i = 0; i < EmployeeManagement.EmployeeList.Count; i++)
             {
                 if (EmployeeManagement.EmployeeList[i].Id == e.ManagerId)
                 {
-                    return EmployeeManagement.EmployeeList[i].FirstName +" "+ EmployeeManagement.EmployeeList[i].LastName;
+                    return EmployeeManagement.EmployeeList[i].FirstName + " " + EmployeeManagement.EmployeeList[i].LastName;
                 }
             }
             return "No Manager";

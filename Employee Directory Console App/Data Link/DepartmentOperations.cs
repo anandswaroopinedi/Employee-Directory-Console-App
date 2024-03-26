@@ -1,14 +1,7 @@
 ﻿using EmployeeDirectoryConsoleApp.DataPresentation.Interface;
 using EmployeeDirectoryConsoleApp.Models;
-using EmployeeDirectoryConsoleApp.DataPresentation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata.Ecma335;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
 using EmployeeDirectoryConsoleApp.Presentation;
+using System.Text.Json;
 
 namespace EmployeeDirectoryConsoleApp.DataPresentation
 {

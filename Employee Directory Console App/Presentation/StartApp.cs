@@ -25,10 +25,10 @@ namespace EmployeeDirectoryConsoleApp.Presentation
         public void Run()
         {
             DepartmentList = _departmentOperations.read();
-           LocationList = _locationOperations.read();
+            LocationList = _locationOperations.read();
             RoleManagement.RoleList = _roleOperations.read();
             EmployeeManagement.EmployeeList = _employeeOperations.read();
-          _displayMenuManagement.StartAppDisplayOptionMenu();
+            _displayMenuManagement.StartAppDisplayOptionMenu();
         }
     }
 }

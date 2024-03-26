@@ -1,19 +1,14 @@
-﻿using EmployeeDirectoryConsoleApp.Presentation.Services;
-using EmployeeDirectoryConsoleApp.DataPresentation.Interface;
+﻿using EmployeeDirectoryConsoleApp.DataPresentation.Interface;
 using EmployeeDirectoryConsoleApp.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using EmployeeDirectoryConsoleApp.Presentation.Services;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace EmployeeDirectoryConsoleApp.DataPresentation
 {
-    public class EmployeeOperations:IEmployeeOperations
+    public class EmployeeOperations : IEmployeeOperations
     {
         public static string FilePathEmployee = @"C:\Users\anand.i\source\repos\Employee Directory Console App\Employee Directory Console App\Data\Employee.json";
-        public  void write()
+        public void write()
         {
             string jsonData = JsonSerializer.Serialize(EmployeeManagement.EmployeeList, new JsonSerializerOptions
             {
@@ -21,7 +16,7 @@ namespace EmployeeDirectoryConsoleApp.DataPresentation
             });
             File.WriteAllText(FilePathEmployee, jsonData);
         }
-        public  List<EmployeeModel> read()
+        public List<EmployeeModel> read()
         {
             using (StreamReader reader = new StreamReader(FilePathEmployee))
             {

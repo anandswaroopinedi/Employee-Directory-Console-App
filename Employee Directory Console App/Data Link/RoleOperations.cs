@@ -1,16 +1,11 @@
-﻿using EmployeeDirectoryConsoleApp.Presentation.Services;
-using EmployeeDirectoryConsoleApp.DataPresentation.Interface;
+﻿using EmployeeDirectoryConsoleApp.DataPresentation.Interface;
 using EmployeeDirectoryConsoleApp.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using EmployeeDirectoryConsoleApp.Presentation.Services;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace EmployeeDirectoryConsoleApp.DataPresentation
 {
-    internal class RoleOperations:IRoleOperations
+    internal class RoleOperations : IRoleOperations
     {
         public static string FilePathRole = @"C:\Users\anand.i\source\repos\Employee Directory Console App\Employee Directory Console App\Data\Role.json";
         public void write()

@@ -1,22 +1,17 @@
-﻿using EmployeeDirectoryConsoleApp.Presentation.Interfaces;
-using EmployeeDirectoryConsoleApp.Interfaces;
+﻿using EmployeeDirectoryConsoleApp.Interfaces;
 using EmployeeDirectoryConsoleApp.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using EmployeeDirectoryConsoleApp.Presentation.Interfaces;
 
 namespace EmployeeDirectoryConsoleApp.Presentation.Services
 {
-    public class DisplayMenuManagement:IDisplayMenuManagement
+    public class DisplayMenuManagement : IDisplayMenuManagement
     {
         private readonly IEmployeeManagement _employeeManagement;
         /*private readonly IRoleDisplayMenuManagement _roleDisplayMenuManagement;*/
         private readonly ILocationManager _locationManager;
         private readonly IDepartmentManager _departmentManager;
         private readonly IRoleManagement _roleManagement;
-        public DisplayMenuManagement(IEmployeeManagement employeeManagement,/* IRoleDisplayMenuManagement roleDisplayMenuManagement,*/ ILocationManager locationManager,IDepartmentManager departmentManager,IRoleManagement roleManagement)
+        public DisplayMenuManagement(IEmployeeManagement employeeManagement,/* IRoleDisplayMenuManagement roleDisplayMenuManagement,*/ ILocationManager locationManager, IDepartmentManager departmentManager, IRoleManagement roleManagement)
         {
             _employeeManagement = employeeManagement;
             /*_roleDisplayMenuManagement = roleDisplayMenuManagement;*/
@@ -59,7 +54,7 @@ namespace EmployeeDirectoryConsoleApp.Presentation.Services
             }
             Console.WriteLine("Thank You for visiting our application");
         }
-        private  bool EmployeeDisplayDefaultMenu()
+        private bool EmployeeDisplayDefaultMenu()
         {
             bool flag = true;
             Console.WriteLine("Options :");
@@ -85,7 +80,7 @@ namespace EmployeeDirectoryConsoleApp.Presentation.Services
         }
         //Displaying Menu When Employee Json has more than 1 employee count
 
-        private  bool EmployeeDisplayAdjustedMenu()
+        private bool EmployeeDisplayAdjustedMenu()
         {
             bool flag = true;
             Console.WriteLine("Options :");
@@ -128,7 +123,7 @@ namespace EmployeeDirectoryConsoleApp.Presentation.Services
         public void EmployeeManagementDisplayMenu()
         {
 
-            bool flag=true;
+            bool flag = true;
             while (flag)
             {
                 if (EmployeeManagement.EmployeeList.Count < 1)
@@ -172,7 +167,7 @@ namespace EmployeeDirectoryConsoleApp.Presentation.Services
                 }
             }
         }
-            public void DepartmentLocationDisplayMenu()
+        public void DepartmentLocationDisplayMenu()
         {
             bool flag = true;
             while (flag)

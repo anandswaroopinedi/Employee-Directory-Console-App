@@ -1,8 +1,8 @@
-﻿using EmployeeDirectoryConsoleApp.Validations;
-using EmployeeDirectoryConsoleApp.DataPresentation.Interface;
+﻿using EmployeeDirectoryConsoleApp.DataPresentation.Interface;
 using EmployeeDirectoryConsoleApp.Interfaces;
 using EmployeeDirectoryConsoleApp.Models;
 using EmployeeDirectoryConsoleApp.Presentation.Interfaces;
+using EmployeeDirectoryConsoleApp.Validations;
 
 namespace EmployeeDirectoryConsoleApp.Presentation.Services
 {

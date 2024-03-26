@@ -1,17 +1,11 @@
-﻿using EmployeeDirectoryConsoleApp.Presentation;
-using EmployeeDirectoryConsoleApp.DataPresentation.Interface;
+﻿using EmployeeDirectoryConsoleApp.DataPresentation.Interface;
 using EmployeeDirectoryConsoleApp.Interfaces;
 using EmployeeDirectoryConsoleApp.Models;
-using EmployeeDirectoryConsoleApp.StreamOperations;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using EmployeeDirectoryConsoleApp.Presentation;
 
 namespace EmployeeDirectoryConsoleApp.Services
 {
-    public class LocationManager:ILocationManager
+    public class LocationManager : ILocationManager
     {
         private readonly ILocationOperations _locationOperations;
         public LocationManager(ILocationOperations locationOperations)
@@ -22,8 +16,8 @@ namespace EmployeeDirectoryConsoleApp.Services
         public void AddLocation(LocationModel location)
         {
             Console.Write("Enter new Location:");
-            string loc=Console.ReadLine().ToUpper();
-            if(!CheckLocationExists(loc))
+            string loc = Console.ReadLine().ToUpper();
+            if (!CheckLocationExists(loc))
             {
                 location.Name = loc;
                 StartApp.LocationList.Add(location);
@@ -32,9 +26,9 @@ namespace EmployeeDirectoryConsoleApp.Services
         }
         public static bool CheckLocationExists(string loc)
         {
-            for (int i = 0;i<StartApp.LocationList.Count;i++)
+            for (int i = 0; i < StartApp.LocationList.Count; i++)
             {
-                if (StartApp.LocationList[i].Name==loc)
+                if (StartApp.LocationList[i].Name == loc)
                 {
                     return true;
                 }
