@@ -1,11 +1,16 @@
-﻿using EmployeeDirectoryConsoleApp.DataPresentation;
-using EmployeeDirectoryConsoleApp.DataPresentation.Interface;
-using EmployeeDirectoryConsoleApp.Interfaces;
-using EmployeeDirectoryConsoleApp.Presentation;
-using EmployeeDirectoryConsoleApp.Presentation.Interfaces;
-using EmployeeDirectoryConsoleApp.Presentation.Services;
-using EmployeeDirectoryConsoleApp.Services;
+﻿using BusinessLogicLayer;
+using BusinessLogicLayer.Interfaces;
+using DataLinkLibrary;
+using DataLinkLibrary.Interface;
+using DepartmentManagementLibrary;
+using DepartmentManagementLibrary.Interfaces;
+using InputEntryManagersLibrary;
+using InputEntryManagersLibrary.Interfaces;
+using LocationManagementLibrary;
+using LocationManagementLibrary.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
+using Presentation.Interfaces;
+using Presentation.Services;
 
 namespace EmployeeDirectoryConsoleApp
 {
@@ -20,13 +25,13 @@ namespace EmployeeDirectoryConsoleApp
         {
 
             var services = new ServiceCollection();
-            services.AddTransient<IEmployeeManager, Services.EmployeeManager>();
+            services.AddTransient<IEmployeeManager, EmployeeManager>();
             /*services.AddTransient<IRoleDisplayMenuManagement, RoleDisplayMenuManagement>();*/
             services.AddTransient<IRoleManager, RoleManager>();
             services.AddTransient<IRoleManagement, RoleManagement>();
             services.AddTransient<IEmployeeManagement, EmployeeManagement>();
             services.AddTransient<IEmployeePropertyEntryManager, EmployeePropertyEntryManager>();
-            services.AddTransient<IDepartmentManager, Services.DepartmentManager>();
+            services.AddTransient<IDepartmentManager, DepartmentManager>();
             services.AddTransient<ILocationManager, LocationManager>();
             services.AddTransient<IEmployeeOperations, EmployeeOperations>();
             services.AddTransient<IRoleOperations, RoleOperations>();
@@ -36,7 +41,7 @@ namespace EmployeeDirectoryConsoleApp
             services.AddTransient<IRolePropertyEntryManager, RolePropertyEntryManager>();
             services.AddTransient<IDepartmentPropertyEntryManager, DepartmentPropertyEntryManager>();
             services.AddSingleton<StartApp>();
-          //  services.AddTransient<IStartApp, StartApp>();
+            //  services.AddTransient<IStartApp, StartApp>();
             services.AddTransient<IDisplayMenuManagement, DisplayMenuManagement>();
             var serviceProvider = services.BuildServiceProvider();
             var startApp = serviceProvider.GetRequiredService<StartApp>();
