@@ -1,5 +1,5 @@
 ﻿using Models;
-namespace InputEntryManagersLibrary.Interfaces
+namespace Presentation.Interfaces
 {
     public interface IEmployeePropertyEntryManager
     {

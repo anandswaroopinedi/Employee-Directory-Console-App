@@ -1,0 +1,36 @@
+﻿using Presentation.Interfaces;
+
+namespace Presentation.Services;
+
+public class RolePropertyEntryManager : IRolePropertyEntryManager
+{
+    public string GetDescription()
+    {
+        string description = "";
+        Console.WriteLine("Description:");
+        Console.WriteLine("1. Upload Later");
+        Console.WriteLine("2. Enter Description");
+        Console.Write("Choose from above options:");
+        int.TryParse(Console.ReadLine(), out int option);
+        switch (option)
+        {
+            case 1:
+                description = "None";
+                return description;
+            case 2:
+                Console.Write("Enter the Description:");
+                description = Console.ReadLine();
+                if (description == "")
+                {
+                    return GetDescription();
+                }
+                else
+                {
+                    return description;
+                }
+            default:
+                Console.WriteLine("Select option from the above list only");
+                return GetDescription();
+        }
+    }
+}

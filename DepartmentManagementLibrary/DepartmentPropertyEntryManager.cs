@@ -24,7 +24,7 @@ namespace DepartmentManagementLibrary
         public string CreateDepartmentRef(ref List<DepartmentModel> departmentList)
         {
             DepartmentModel departmentModel = new DepartmentModel();
-            _departmentManager.AddDepartment(departmentModel,ref departmentList);
+            _departmentManager.AddDepartment(departmentModel, ref departmentList);
             _departmentOperations.write(departmentList);
             return departmentModel.Name;
         }

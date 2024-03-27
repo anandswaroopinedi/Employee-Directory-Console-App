@@ -1,17 +1,17 @@
-﻿using Validations;
-using InputEntryManagersLibrary.Interfaces;
-/*using Presentation.Interfaces;*/
+﻿/*using Presentation.Interfaces;*/
 using Models;
+using Presentation.Interfaces;
+using Validations;
 
-namespace InputEntryManagersLibrary
+namespace Presentation.Services
 {
     public class EmployeePropertyEntryManager : IEmployeePropertyEntryManager
     {
-/*        private readonly IRoleManagement _roleManagement;
+        private readonly IRoleManagement _roleManagement;
         public EmployeePropertyEntryManager(IRoleManagement roleManagement)
         {
             _roleManagement = roleManagement;
-        }*/
+        }
         public string GetFirstName()
         {
             Console.Write("Enter Employee First Name*:");
@@ -52,9 +52,9 @@ namespace InputEntryManagersLibrary
                 case 1:
                     return "None";
                 case 2:
-                    Console.Write("Enter Date Of Birth(DD|MM|YYYY):");
+                    Console.Write("Enter Date Of Birth(DD/MM/YYYY):");
                     string dob = Console.ReadLine();
-                    DateTime dateTime = DateTime.Parse("2000-01-01");
+                    DateTime dateTime = DateTime.Parse("01/01/2003");
                     DateTime date = new DateTime();
                     if (DateTime.TryParse(dob, out date) && date < dateTime)
                     {
@@ -136,10 +136,10 @@ namespace InputEntryManagersLibrary
                     return "None";
                 case 2:
                     Console.Write("Enter the Project Name Working On:");
-                    string projectNmae = Console.ReadLine();
-                    if (projectNmae != "")
+                    string projectName = Console.ReadLine();
+                    if (projectName != "")
                     {
-                        return projectNmae;
+                        return projectName;
                     }
                     else
                     {
@@ -157,7 +157,7 @@ namespace InputEntryManagersLibrary
 
 
 
-        public static string DisplayEmployeeId(EmployeeModel employee,List<EmployeeModel> employeeList)
+        public static string DisplayEmployeeId(EmployeeModel employee, List<EmployeeModel> employeeList)
         {
             for (int i = 0; i < employeeList.Count && employeeList[i].Id != employee.Id; i++)
             {
@@ -176,7 +176,6 @@ namespace InputEntryManagersLibrary
         }
         public static int CheckIdExists(string id, List<EmployeeModel> employeeList)
         {
-            Console.WriteLine(employeeList.Count);
             for (int i = 0; i < employeeList.Count; i++)
             {
                 if (employeeList[i].Id == id)
@@ -200,7 +199,6 @@ namespace InputEntryManagersLibrary
                     break;
                 case 2:
                     managerId = DisplayEmployeeId(emp, employeeList);
-                    Console.WriteLine(managerId);
                     if (Validation.ValidateManagerId(managerId) || CheckIdExists(managerId, employeeList) != -1)
                     {
                         return managerId;
@@ -234,7 +232,7 @@ namespace InputEntryManagersLibrary
             if (option == 0)
             {
                 /*RoleManagement roleManagement = new RoleManagement();*/
-                /*_roleManagement.AddRole();*/
+                _roleManagement.AddRole();
                 return rolesList[rolesList.Count - 1].Name;
             }
             if (option > 0 && option <= rolesList.Count)

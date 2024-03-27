@@ -1,7 +1,7 @@
 [
   {
     "Id": "TZ0002",
-    "FirstName": "Swaroop",
+    "FirstName": "yt",
     "LastName": "Inedi",
     "DateOfBirth": "None",
     "Email": "w@gmail.com",
@@ -15,10 +15,10 @@
   },
   {
     "Id": "TZ0001",
-    "FirstName": "Df",
-    "LastName": "er",
+    "FirstName": "wer",
+    "LastName": "pppo",
     "DateOfBirth": "None",
-    "Email": "a@gmail.com",
+    "Email": "king@gmail",
     "MobileNumber": "None",
     "JoinDate": "22/03/2000",
     "Location": "HYDERABAD",
@@ -110,5 +110,47 @@
     "Department": "DFG",
     "ManagerId": "TZ0004",
     "Project": "None"
+  },
+  {
+    "Id": "TZ0024",
+    "FirstName": "u",
+    "LastName": "i",
+    "DateOfBirth": "01/01/1888",
+    "Email": "w@h",
+    "MobileNumber": "8688854833",
+    "JoinDate": "22/03/2000",
+    "Location": "GUNTUR",
+    "JobTitle": "UX",
+    "Department": "ASDF",
+    "ManagerId": "TZ0008",
+    "Project": "None"
+  },
+  {
+    "Id": "TZ0045",
+    "FirstName": "ui",
+    "LastName": "jh",
+    "DateOfBirth": "23/07/2002",
+    "Email": "t@gmail",
+    "MobileNumber": "None",
+    "JoinDate": "22/03/2000",
+    "Location": "OI",
+    "JobTitle": "WER",
+    "Department": "QA",
+    "ManagerId": "None",
+    "Project": "None"
+  },
+  {
+    "Id": "TZ0030",
+    "FirstName": "opi",
+    "LastName": "uio",
+    "DateOfBirth": "01/01/2000",
+    "Email": "r@g",
+    "MobileNumber": "None",
+    "JoinDate": "22/03/2000",
+    "Location": "VIZAG",
+    "JobTitle": "EE",
+    "Department": "PROD ENGG",
+    "ManagerId": "TZ0002",
+    "Project": "Bavys"
   }
 ]

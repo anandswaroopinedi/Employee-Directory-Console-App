@@ -121,7 +121,7 @@ namespace Presentation.Services
             return flag;
         }
         //To Display Menu
-        public void EmployeeManagementDisplayMenu()
+        private void EmployeeManagementDisplayMenu()
         {
 
             bool flag = true;
@@ -138,7 +138,7 @@ namespace Presentation.Services
                 }
             }
         }
-        public void RoleManagementDisplayMenu()
+        private void RoleManagementDisplayMenu()
         {
             bool flag = true;
             while (flag)
@@ -168,7 +168,7 @@ namespace Presentation.Services
                 }
             }
         }
-        public void DepartmentLocationDisplayMenu()
+        private void DepartmentLocationDisplayMenu()
         {
             bool flag = true;
             while (flag)
@@ -183,12 +183,12 @@ namespace Presentation.Services
                 switch (option)
                 {
                     case 1:
-                        DepartmentModel model = new DepartmentModel();
-                        _departmentManager.AddDepartment(model,ref StartApp.DepartmentList);
+                        DepartmentModel deptModel = new DepartmentModel();
+                        _departmentManager.AddDepartment(deptModel, ref StartApp.DepartmentList);
                         break;
                     case 2:
-                        LocationModel model1 = new LocationModel();
-                        _locationManager.AddLocation(model1,ref StartApp.LocationList);
+                        LocationModel locModel = new LocationModel();
+                        _locationManager.AddLocation(locModel, ref StartApp.LocationList);
                         break;
                     case 3:
                         flag = false;

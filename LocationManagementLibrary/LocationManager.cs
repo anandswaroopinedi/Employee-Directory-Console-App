@@ -12,7 +12,7 @@ namespace LocationManagementLibrary
             _locationOperations = locationOperations;
         }
 
-        public void AddLocation(LocationModel location,ref List<LocationModel> locationList)
+        public void AddLocation(LocationModel location, ref List<LocationModel> locationList)
         {
             Console.Write("Enter new Location:");
             string loc = Console.ReadLine().ToUpper();

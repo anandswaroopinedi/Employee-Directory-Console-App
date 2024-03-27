@@ -4,8 +4,6 @@ using DataLinkLibrary;
 using DataLinkLibrary.Interface;
 using DepartmentManagementLibrary;
 using DepartmentManagementLibrary.Interfaces;
-using InputEntryManagersLibrary;
-using InputEntryManagersLibrary.Interfaces;
 using LocationManagementLibrary;
 using LocationManagementLibrary.Interfaces;
 using Microsoft.Extensions.DependencyInjection;

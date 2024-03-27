@@ -16,10 +16,10 @@ namespace LocationManagementLibrary
             _locationOperations = locationOperations;
         }
 
-        public string CreateLocationRef(ref List<LocationModel>locationList)
+        public string CreateLocationRef(ref List<LocationModel> locationList)
         {
             LocationModel locationModel = new LocationModel();
-            _locationManager.AddLocation(locationModel,ref locationList);
+            _locationManager.AddLocation(locationModel, ref locationList);
             _locationOperations.write(locationList);
             return locationModel.Name;
         }

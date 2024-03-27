@@ -1,4 +1,4 @@
-﻿namespace InputEntryManagersLibrary.Interfaces
+﻿namespace Presentation.Interfaces
 {
     public interface IRolePropertyEntryManager
     {

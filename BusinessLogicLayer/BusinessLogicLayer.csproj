@@ -9,7 +9,6 @@
   <ItemGroup>
     <ProjectReference Include="..\DataLinkLibrary\DataLinkLibrary.csproj" />
     <ProjectReference Include="..\DepartmentManagementLibrary\DepartmentManagementLibrary.csproj" />
-    <ProjectReference Include="..\InputEntryManagersLibrary\InputEntryManagersLibrary.csproj" />
     <ProjectReference Include="..\LocationManagementLibrary\LocationManagementLibrary.csproj" />
     <ProjectReference Include="..\Models\Models.csproj" />
   </ItemGroup>

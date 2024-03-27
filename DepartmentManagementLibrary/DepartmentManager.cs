@@ -14,7 +14,7 @@ namespace DepartmentManagementLibrary
             _departmentHandler = departmentHandler;
         }
 
-        public static bool CheckDepartmentExists(string name, List<DepartmentModel>departmentList)
+        public static bool CheckDepartmentExists(string name, List<DepartmentModel> departmentList)
         {
             for (int i = 0; i < departmentList.Count; i++)
             {
@@ -23,11 +23,11 @@ namespace DepartmentManagementLibrary
             }
             return false;
         }
-        public void AddDepartment(DepartmentModel dept,ref List<DepartmentModel> departmentList)
+        public void AddDepartment(DepartmentModel dept, ref List<DepartmentModel> departmentList)
         {
             Console.Write("Enter New DepartMent Name:");
             string name = Console.ReadLine().ToUpper();
-            if (!CheckDepartmentExists(name,departmentList))
+            if (!CheckDepartmentExists(name, departmentList))
             {
                 dept.Name = name;
                 departmentList.Add(dept);
