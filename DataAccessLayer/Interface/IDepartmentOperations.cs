@@ -1,6 +1,6 @@
 ﻿using Models;
 
-namespace DataLinkLibrary.Interface
+namespace DataAccessLayer.Interface
 {
     public interface IDepartmentOperations
     {

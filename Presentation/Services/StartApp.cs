@@ -1,4 +1,4 @@
-﻿using DataLinkLibrary.Interface;
+﻿using DataAccessLayer.Interface;
 using Models;
 using Presentation.Interfaces;
 
@@ -12,7 +12,7 @@ namespace Presentation.Services
         private readonly IRoleOperations _roleOperations;
         private readonly IDepartmentOperations _departmentOperations;
         private readonly IEmployeeOperations _employeeOperations;
-        public readonly IDisplayMenuManagement _displayMenuManagement;
+        private readonly IDisplayMenuManagement _displayMenuManagement;
         public StartApp(ILocationOperations locationOperations, IRoleOperations roleOperations, IDepartmentOperations departmentOperations, IEmployeeManagement employeeManagement, IRoleManagement roleManagement, IEmployeeOperations employeeOperations, IDisplayMenuManagement displayMenuManagement)
         {
             _locationOperations = locationOperations;

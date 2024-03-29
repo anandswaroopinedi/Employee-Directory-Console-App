@@ -1,5 +1,5 @@
 ﻿
-using DataLinkLibrary.Interface;
+using DataAccessLayer.Interface;
 using DepartmentManagementLibrary.Interfaces;
 using Models;
 namespace DepartmentManagementLibrary
@@ -34,8 +34,13 @@ namespace DepartmentManagementLibrary
             Console.WriteLine("Departments:");
             Console.WriteLine("0. Add New Department");
             DisplayDepartmentList(departmentList);
+            Console.WriteLine($"{departmentList.Count+1}. Exit");
             Console.Write("Choose Department from above options*:");
             int.TryParse(Console.ReadLine(), out option);
+            if (option == departmentList.Count+1)
+            {
+                return "Abort";
+            }
             if (option == 0)
             {
                 return this.CreateDepartmentRef(ref departmentList);

@@ -1,8 +1,8 @@
-﻿using DataLinkLibrary.Interface;
+﻿using DataAccessLayer.Interface;
 using Models;
 using System.Text.Json;
 
-namespace DataLinkLibrary
+namespace DataAccessLayer
 {
     public class RoleOperations : IRoleOperations
     {

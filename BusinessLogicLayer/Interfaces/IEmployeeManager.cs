@@ -7,6 +7,5 @@ namespace BusinessLogicLayer.Interfaces
         public void Create(EmployeeModel employee,ref List<EmployeeModel> employeeList);
         public void Update(EmployeeModel employee,ref List<EmployeeModel> employeeList);
         public void Delete(EmployeeModel model,ref List<EmployeeModel> employeeModels);
-        public EmployeeModel Display(string id);
     }
 }

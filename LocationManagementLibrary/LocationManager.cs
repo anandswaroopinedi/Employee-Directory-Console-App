@@ -1,4 +1,4 @@
-﻿using DataLinkLibrary.Interface;
+﻿using DataAccessLayer.Interface;
 using LocationManagementLibrary.Interfaces;
 using Models;
 
@@ -20,6 +20,7 @@ namespace LocationManagementLibrary
             {
                 location.Name = loc;
                 locationList.Add(location);
+                Console.WriteLine("Location Added Successfully");
                 _locationOperations.write(locationList);
             }
         }

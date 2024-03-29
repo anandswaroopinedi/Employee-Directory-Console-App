@@ -1,6 +1,6 @@
 ﻿
 
-using DataLinkLibrary.Interface;
+using DataAccessLayer.Interface;
 using LocationManagementLibrary.Interfaces;
 using Models;
 
@@ -35,9 +35,14 @@ namespace LocationManagementLibrary
             Console.WriteLine("Locations:");
             Console.WriteLine("0.  Add New Location");
             DisplayLocationList(locationList);
+            Console.WriteLine($"{locationList.Count+1}. Exit");
             Console.Write("Choose Location from above options:");
             int option;
             int.TryParse(Console.ReadLine(), out option);
+            if(option==locationList.Count+1)
+            {
+                return "Abort";
+            }
             if (option == 0)
             {
                 return this.CreateLocationRef(ref locationList);

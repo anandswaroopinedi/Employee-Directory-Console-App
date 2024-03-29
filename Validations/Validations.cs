@@ -14,7 +14,9 @@ namespace Validations
         }
         public static bool ValidateName(string name)
         {
-            if (!string.IsNullOrEmpty(name))
+            string exp = @"^[a-zA-Z]+$";
+            Regex re = new Regex(exp);
+            if (re.IsMatch(name))
             {
                 return true;
             }
@@ -22,7 +24,7 @@ namespace Validations
         }
         public static bool ValidateEmail(string email)
         {
-            string exp = @"(^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$)";
+            string exp = @"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$";
             Regex re = new Regex(exp);
             if (re.IsMatch(email))
                 return true;

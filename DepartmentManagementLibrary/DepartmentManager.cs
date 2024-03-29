@@ -1,4 +1,4 @@
-﻿using DataLinkLibrary.Interface;
+﻿using DataAccessLayer.Interface;
 using DepartmentManagementLibrary.Interfaces;
 using Models;
 namespace DepartmentManagementLibrary
@@ -31,6 +31,7 @@ namespace DepartmentManagementLibrary
             {
                 dept.Name = name;
                 departmentList.Add(dept);
+                Console.WriteLine("Department Added Successfully");
                 _departmentHandler.write(departmentList);
             }
         }

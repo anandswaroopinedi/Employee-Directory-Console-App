@@ -1,5 +1,5 @@
 ﻿using BusinessLogicLayer.Interfaces;
-using DataLinkLibrary.Interface;
+using DataAccessLayer.Interface;
 using Models;
 
 namespace BusinessLogicLayer

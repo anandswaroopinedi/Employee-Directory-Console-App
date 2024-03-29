@@ -1,7 +1,7 @@
 ﻿using BusinessLogicLayer;
 using BusinessLogicLayer.Interfaces;
-using DataLinkLibrary;
-using DataLinkLibrary.Interface;
+using DataAccessLayer;
+using DataAccessLayer.Interface;
 using DepartmentManagementLibrary;
 using DepartmentManagementLibrary.Interfaces;
 using LocationManagementLibrary;
@@ -15,16 +15,11 @@ namespace EmployeeDirectoryConsoleApp
 
     class Program
     {
-
-
-        public Program() { }
-
         public static void Main(String[] args)
         {
 
             var services = new ServiceCollection();
             services.AddTransient<IEmployeeManager, EmployeeManager>();
-            /*services.AddTransient<IRoleDisplayMenuManagement, RoleDisplayMenuManagement>();*/
             services.AddTransient<IRoleManager, RoleManager>();
             services.AddTransient<IRoleManagement, RoleManagement>();
             services.AddTransient<IEmployeeManagement, EmployeeManagement>();
@@ -39,7 +34,6 @@ namespace EmployeeDirectoryConsoleApp
             services.AddTransient<IRolePropertyEntryManager, RolePropertyEntryManager>();
             services.AddTransient<IDepartmentPropertyEntryManager, DepartmentPropertyEntryManager>();
             services.AddSingleton<StartApp>();
-            //  services.AddTransient<IStartApp, StartApp>();
             services.AddTransient<IDisplayMenuManagement, DisplayMenuManagement>();
             var serviceProvider = services.BuildServiceProvider();
             var startApp = serviceProvider.GetRequiredService<StartApp>();

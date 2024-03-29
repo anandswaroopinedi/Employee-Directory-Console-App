@@ -1,7 +1,7 @@
 ﻿
 
 using BusinessLogicLayer.Interfaces;
-using DataLinkLibrary.Interface;
+using DataAccessLayer.Interface;
 using Models;
 
 
@@ -23,16 +23,6 @@ namespace BusinessLogicLayer
         {
             _employeeOperations.write(employeeList);
         }
-        public EmployeeModel Display(string id)
-        {
-            int index = GetIdExists(id);
-            if (index >= 0)
-            {
-                List<EmployeeModel> employeeList = _employeeOperations.read();
-                return employeeList[index];
-            }
-            return new EmployeeModel();
-        }
         public void Delete(EmployeeModel e, ref List<EmployeeModel> employeeList)
         {
             employeeList.Remove(e);
@@ -44,20 +34,6 @@ namespace BusinessLogicLayer
                 }
             }
             _employeeOperations.write(employeeList);
-        }
-        private int GetIdExists(string id)
-        {
-            List<EmployeeModel> employeeList = _employeeOperations.read();
-            for (int i = 0; i < employeeList.Count; i++)
-            {
-                if (employeeList[i].Id == id)
-                {
-                    return i;
-
-                }
-
-            }
-            return -1;
         }
 
     }
