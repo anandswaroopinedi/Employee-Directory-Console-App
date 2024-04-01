@@ -36,10 +36,10 @@ namespace EmployeeDirectoryConsoleApp
             services.AddTransient<IRolePropertyEntryManager, RolePropertyEntryManager>();
             services.AddTransient<IDepartmentPropertyEntryManager, DepartmentPropertyEntryManager>();
             services.AddTransient<IProjectOperations, ProjectOperations>();
-            services.AddTransient<IProjectManagement,ProjectManagement>();
+            services.AddTransient<IProjectManagement, ProjectManagement>();
             services.AddTransient<IProjectManager, ProjectManager>();
-            services.AddTransient<IDepartmentManagement,DepartmentManagement>();
-            services.AddTransient<ILocationManagement,LocationManagement>();
+            services.AddTransient<IDepartmentManagement, DepartmentManagement>();
+            services.AddTransient<ILocationManagement, LocationManagement>();
             services.AddSingleton<StartApp>();
             services.AddTransient<IDisplayMenuManagement, DisplayMenuManagement>();
             var serviceProvider = services.BuildServiceProvider();

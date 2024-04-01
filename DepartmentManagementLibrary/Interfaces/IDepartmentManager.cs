@@ -6,5 +6,6 @@ namespace DepartmentManagementLibrary.Interfaces
     {
         public bool AddDepartment(DepartmentModel dept);
         public List<DepartmentModel> GetAll();
+        public string GetDepartmentName(int id);
     }
 }

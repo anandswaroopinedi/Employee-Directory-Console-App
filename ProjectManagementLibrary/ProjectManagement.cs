@@ -1,35 +1,29 @@
-﻿using DataAccessLayer.Interface;
-using Models;
+﻿using Models;
 using ProjectManagementLibrary.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ProjectManagementLibrary
 {
-    public class ProjectManagement:IProjectManagement
+    public class ProjectManagement : IProjectManagement
     {
         private readonly IProjectManager _projectManager;
         public ProjectManagement(IProjectManager projectManager)
         {
             _projectManager = projectManager;
         }
-        public string AddProject()
+        public int AddProject()
         {
             Console.WriteLine("0. Exit");
-            Console.WriteLine("1. Add Project:");
+            Console.WriteLine("1. Enter Project");
             Console.Write("Choose options from above:");
             int.TryParse(Console.ReadLine(), out int option);
             if (option == 0)
             {
-                return "Abort";
+                return 0;
             }
             else if (option == 1)
             {
-                Console.Write("1. Enter Project Name:");
-                string project = Console.ReadLine();
+                Console.Write("Enter Project Name:");
+                string project = Console.ReadLine().ToUpper();
                 if (!string.IsNullOrEmpty(project))
                 {
                     ProjectModel projectModel = new ProjectModel();
@@ -37,12 +31,12 @@ namespace ProjectManagementLibrary
                     if (_projectManager.AddProject(projectModel))
                     {
                         Console.WriteLine("Project Added Successfully");
-                        return project;
+                        return projectModel.Id;
                     }
                     else
                     {
                         Console.WriteLine("Project already exists");
-                        return "failed";
+                        return -1;
                     }
                 }
                 else
@@ -62,7 +56,7 @@ namespace ProjectManagementLibrary
             Console.WriteLine($"Projects(Count:{projectList.Count}):");
             for (int i = 0; i < projectList.Count; i++)
             {
-                Console.WriteLine($"{projectList[i].Id}. {projectList[i].Name}");
+                Console.WriteLine($"{i+1}. {projectList[i].Name}");
             }
         }
     }

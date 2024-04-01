@@ -1,9 +1,4 @@
 ﻿using Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ProjectManagementLibrary.Interfaces
 {
@@ -11,5 +6,6 @@ namespace ProjectManagementLibrary.Interfaces
     {
         public bool AddProject(ProjectModel project);
         public List<ProjectModel> GetAll();
+        public string GetProjectName(int id);
     }
 }

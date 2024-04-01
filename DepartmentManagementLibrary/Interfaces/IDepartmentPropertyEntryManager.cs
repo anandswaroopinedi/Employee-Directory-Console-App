@@ -2,7 +2,6 @@
 {
     public interface IDepartmentPropertyEntryManager
     {
-        public string CreateDepartmentRef();
-        public string ChooseDepartment();
+        public int ChooseDepartment();
     }
 }

@@ -13,36 +13,40 @@ namespace Presentation.Services
         private readonly IDepartmentPropertyEntryManager _departmentPropertyEntryManager;
         private readonly ILocationPropertyEntryManager _locationPropertyEntryManager;
         private readonly IRolePropertyEntryManager _rolePropertyEntryManager;
-        public RoleManagement(IRoleManager roleManager, ILocationPropertyEntryManager locationPropertyEntryManager, IDepartmentPropertyEntryManager departmentPropertyEntryManager, IRolePropertyEntryManager rolePropertyEntryManager)
+        private readonly ILocationManager _locationManager;
+        private readonly IDepartmentManager _departmentManager;
+        public RoleManagement(IRoleManager roleManager, ILocationPropertyEntryManager locationPropertyEntryManager, IDepartmentPropertyEntryManager departmentPropertyEntryManager, IRolePropertyEntryManager rolePropertyEntryManager, ILocationManager locationManager, IDepartmentManager departmentManager)
         {
             _roleManager = roleManager;
             _departmentPropertyEntryManager = departmentPropertyEntryManager;
             _locationPropertyEntryManager = locationPropertyEntryManager;
             _rolePropertyEntryManager = rolePropertyEntryManager;
+            _locationManager = locationManager;
+            _departmentManager = departmentManager;
         }
 
         private bool GetRoleDetailsInput(RolesModel role)
         {
             Console.WriteLine("Roles");
-            role.Department = _departmentPropertyEntryManager.ChooseDepartment();
-            if (role.Department == "Abort")
+            role.DepartmentId = _departmentPropertyEntryManager.ChooseDepartment();
+            if (role.DepartmentId == 0)
             {
                 return false;
             }
             Console.WriteLine("Roles");
-            role.Location = _locationPropertyEntryManager.ChooseLocation();
-            if(role.Location=="Abort")
+            role.LocationId = _locationPropertyEntryManager.ChooseLocation();
+            if (role.LocationId == 0)
             {
                 return false;
             }
             role.Description = _rolePropertyEntryManager.GetDescription();
-            if (role.Description =="Abort")
+            if (role.Description == "Abort")
             {
                 return false;
             }
             return true;
         }
-        public string AddRole()
+        public int AddRole()
         {
             Console.WriteLine("0. Exit");
             Console.WriteLine("1. Enter New Role:");
@@ -50,7 +54,7 @@ namespace Presentation.Services
             int.TryParse(Console.ReadLine(), out int option);
             if (option == 0)
             {
-                return "Abort";
+                return 0;
             }
             else if (option == 1)
             {
@@ -64,24 +68,24 @@ namespace Presentation.Services
                     if (result)
                     {
                         _roleManager.AddRole(roleModel);
-                        
-                        Console.WriteLine("RoleList Added Successfully");
-                        return roleName;
+
+                        Console.WriteLine($"RoleList Added Successfully with Id:{roleModel.Id}");
+                        return roleModel.Id;
                     }
                     else
                     {
                         Console.WriteLine("Failed to Add Role");
-                        return "failed";
+                        return -1;
                     }
                 }
                 else
                 {
                     Console.WriteLine("Role Exists Previously in the database so u can't add again");
-                    return "failed";
+                    return -1;
                 }
             }
             else
-            { 
+            {
                 Console.WriteLine("Choose from above options only.");
                 return AddRole();
             }
@@ -93,7 +97,7 @@ namespace Presentation.Services
             for (int i = 0; i < roleList.Count; i++)
             {
                 Console.WriteLine(new string('-', 66));
-                Console.WriteLine("{0,-18} {1,-18} {2,-12} {3,-18}", roleList[i].Name, roleList[i].Department, roleList[i].Location, roleList[i].Description);
+                Console.WriteLine("{0,-18} {1,-18} {2,-12} {3,-18}", roleList[i].Name, _departmentManager.GetDepartmentName(roleList[i].DepartmentId), _locationManager.GetLocationName(roleList[i].LocationId), roleList[i].Description);
             }
         }
 

@@ -4,6 +4,6 @@ namespace LocationManagementLibrary.Interfaces
 {
     public interface ILocationPropertyEntryManager
     {
-        public string ChooseLocation();
+        public int ChooseLocation();
     }
 }

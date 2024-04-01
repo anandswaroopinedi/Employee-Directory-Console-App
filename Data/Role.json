@@ -1,86 +1,30 @@
 [
   {
-    "Name": "TESTER",
-    "Department": "PROD ENGG",
-    "Location": "HYDERABAD",
-    "Description": "None"
+    "Id": 1,
+    "Name": "FULL STACK DEVELOPER",
+    "DepartmentId": 1,
+    "LocationId": 1,
+    "Description": "NONE"
   },
   {
-    "Name": "HR",
-    "Department": "PROD ENGG",
-    "Location": "HYDERABAD",
-    "Description": "None"
+    "Id": 2,
+    "Name": "TRAINEE",
+    "DepartmentId": 1,
+    "LocationId": 2,
+    "Description": "NONE"
   },
   {
-    "Name": "EE",
-    "Department": "PROD ENGG",
-    "Location": "HYDERABAD",
-    "Description": "None"
+    "Id": 3,
+    "Name": "YUI",
+    "DepartmentId": 2,
+    "LocationId": 2,
+    "Description": "NONE"
   },
   {
-    "Name": "WER",
-    "Department": "PROD ENGG",
-    "Location": "LONDON",
-    "Description": "None"
-  },
-  {
-    "Name": "TYU",
-    "Department": "QW",
-    "Location": "PO",
-    "Description": "None"
-  },
-  {
-    "Name": "UX",
-    "Department": "ASDF",
-    "Location": "LONDON",
-    "Description": "None"
-  },
-  {
-    "Name": "TDDFHL",
-    "Department": "QA",
-    "Location": "TY",
-    "Description": "dfyuyruhk"
-  },
-  {
-    "Name": "3",
-    "Department": "PROD ENGG",
-    "Location": "OI",
-    "Description": "fdsihiuf"
-  },
-  {
-    "Name": "WE",
-    "Department": "PROD ENGG",
-    "Location": "OI",
-    "Description": "None"
-  },
-  {
-    "Name": "DFE",
-    "Department": "PROD ENGG",
-    "Location": "OI",
-    "Description": "None"
-  },
-  {
-    "Name": "WQAS",
-    "Department": "QA",
-    "Location": "OI",
-    "Description": "None"
-  },
-  {
-    "Name": "DEW",
-    "Department": "QA",
-    "Location": "LONDON",
-    "Description": "None"
-  },
-  {
-    "Name": "SWE",
-    "Department": "SDE",
-    "Location": "ORCAS",
-    "Description": "None"
-  },
-  {
-    "Name": "GHU",
-    "Department": "WQ",
-    "Location": "QW",
-    "Description": "None"
+    "Id": 4,
+    "Name": "BACKEND DEVELOPER",
+    "DepartmentId": 1,
+    "LocationId": 2,
+    "Description": "NONE"
   }
 ]

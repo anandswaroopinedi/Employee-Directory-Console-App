@@ -21,15 +21,27 @@ namespace DepartmentManagementLibrary
             }
             return false;
         }
+        public string GetDepartmentName(int id)
+        {
+            List<DepartmentModel> departmentList = _departmentOperations.read();
+            for (int i = 0; i < departmentList.Count; i++)
+            {
+                if (departmentList[i].Id == id)
+                {
+                    return departmentList[i].Name;
+                }
+            }
+            return "None";
+        }
         public bool AddDepartment(DepartmentModel dept)
         {
-            
-            List<DepartmentModel>departmentList= _departmentOperations.read();
+
+            List<DepartmentModel> departmentList = _departmentOperations.read();
             if (!CheckDepartmentExists(dept.Name, departmentList))
             {
-                dept.Id=departmentList.Count+1;
+                dept.Id = departmentList.Count + 1;
                 departmentList.Add(dept);
-
+                Console.WriteLine(dept.Name);
                 _departmentOperations.write(departmentList);
                 return true;
             }

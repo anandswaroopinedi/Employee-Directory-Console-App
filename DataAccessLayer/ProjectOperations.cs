@@ -4,7 +4,7 @@ using System.Text.Json;
 
 namespace DataAccessLayer
 {
-    public class ProjectOperations:IProjectOperations
+    public class ProjectOperations : IProjectOperations
     {
         public static string FilePathLocation = @"C:\Users\anand.i\source\repos\Employee Directory Console App\Data\Project.json";
         public List<ProjectModel> read()

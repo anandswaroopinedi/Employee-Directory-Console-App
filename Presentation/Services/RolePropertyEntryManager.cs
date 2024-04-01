@@ -17,7 +17,7 @@ public class RolePropertyEntryManager : IRolePropertyEntryManager
         {
             case 0: return "Abort";
             case 1:
-                description = "None";
+                description = "NONE";
                 return description;
             case 2:
                 Console.Write("Enter the Description:");
@@ -30,7 +30,7 @@ public class RolePropertyEntryManager : IRolePropertyEntryManager
                 {
                     return description;
                 }
-            
+
             default:
                 Console.WriteLine("Select option from the above list only");
                 return GetDescription();

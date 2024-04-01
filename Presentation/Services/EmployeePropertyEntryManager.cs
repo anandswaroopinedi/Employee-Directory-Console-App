@@ -1,4 +1,6 @@
 ﻿using BusinessLogicLayer.Interfaces;
+using DepartmentManagementLibrary.Interfaces;
+using LocationManagementLibrary.Interfaces;
 using Models;
 using Presentation.Interfaces;
 using ProjectManagementLibrary.Interfaces;
@@ -12,12 +14,16 @@ namespace Presentation.Services
         private readonly IRoleManager _roleManager;
         private readonly IProjectManager _projectManager;
         private readonly IProjectManagement _projectManagement;
-        public EmployeePropertyEntryManager(IRoleManagement roleManagement, IRoleManager roleManager, IProjectManager projectManager,IProjectManagement projectManagement)
+        private readonly IDepartmentManager _departmentManager;
+        private readonly ILocationManager _locationManager;
+        public EmployeePropertyEntryManager(IRoleManagement roleManagement, IRoleManager roleManager, IProjectManager projectManager, IProjectManagement projectManagement, ILocationManager locationManager, IDepartmentManager departmentManager)
         {
             _roleManagement = roleManagement;
             _roleManager = roleManager;
             _projectManager = projectManager;
             _projectManagement = projectManagement;
+            _locationManager = locationManager;
+            _departmentManager = departmentManager;
         }
         public string GetFirstName()
         {
@@ -33,7 +39,7 @@ namespace Presentation.Services
             else if (option == 1)
             {
                 Console.Write("Enter Employee FirstName*:");
-                string empFirstName = Console.ReadLine();
+                string empFirstName = Console.ReadLine().ToUpper();
                 if (Validation.ValidateName(empFirstName))
                 {
                     return empFirstName;
@@ -64,7 +70,7 @@ namespace Presentation.Services
             else if (option == 1)
             {
                 Console.Write("Enter Employee Last Name*:");
-                string empLastName = Console.ReadLine();
+                string empLastName = Console.ReadLine().ToUpper();
                 if (Validation.ValidateName(empLastName))
                 {
                     return empLastName;
@@ -95,7 +101,7 @@ namespace Presentation.Services
                 case 0:
                     return "Abort";
                 case 1:
-                    return "None";
+                    return "NONE";
                 case 2:
                     Console.Write("Enter Date Of Birth(DD/MM/YYYY):");
                     string dob = Console.ReadLine();
@@ -127,7 +133,7 @@ namespace Presentation.Services
             else if (option == 1)
             {
                 Console.Write("Enter Employee Email*:");
-                string empEmail = Console.ReadLine();
+                string empEmail = Console.ReadLine().ToUpper();
                 if (Validation.ValidateEmail(empEmail))
                 {
                     return empEmail;
@@ -158,7 +164,7 @@ namespace Presentation.Services
                 case 0: return "Abort";
 
                 case 1:
-                    return "None";
+                    return "NONE";
                 case 2:
                     Console.Write("Enter Mobile No:");
                     string mobNo = Console.ReadLine();
@@ -209,7 +215,7 @@ namespace Presentation.Services
                 return GetJoiningDate();
             }
         }
-        public string GetProjectName()
+        public int ChooseProject()
         {
             List<ProjectModel> projectList = _projectManager.GetAll();
             Console.WriteLine("Select Project:");
@@ -224,46 +230,45 @@ namespace Presentation.Services
             int.TryParse(Console.ReadLine(), out int option);
             if (option == 0)
             {
-                return "Abort";
+                return 0;
             }
             else if (option == 1)
             {
-                string result = _projectManagement.AddProject();
-                if (result == "Abort")
+                int result = _projectManagement.AddProject();
+                if (result == 0)
                 {
-                    return "Abort";
+                    return 0;
                 }
-                else if (result == "failed")
+                else if (result == -1)
                 {
-                    return GetProjectName();
+                    return ChooseProject();
                 }
                 else
                 {
                     projectList = _projectManager.GetAll();
-                    return projectList[projectList.Count - 1].Name;
+                    return projectList[projectList.Count - 1].Id;
                 }
             }
             if (option > 1 && option <= projectList.Count + 1)
             {
-                return projectList[option - 2].Name;
+                return projectList[option - 2].Id;
             }
             else
             {
                 Console.WriteLine("You can only choose from above list");
             }
-            return GetProjectName();
+            return ChooseProject();
 
         }
-
-
-
-
         public static string DisplayEmployeeId(EmployeeModel employee, List<EmployeeModel> employeeList)
         {
             Console.WriteLine("0. Exit");
-            for (int i = 0; i < employeeList.Count && employeeList[i].Id != employee.Id; i++)
+            for (int i = 0; i < employeeList.Count; i++)
             {
-                Console.WriteLine($"{i + 1}  {employeeList[i].Id}  {employeeList[i].FirstName + "  " + employeeList[i].LastName}");
+                if (employeeList[i].Id != employee.Id)
+                {
+                    Console.WriteLine($"{i + 1}  {employeeList[i].Id}  {employeeList[i].FirstName + "  " + employeeList[i].LastName}");
+                }
             }
             Console.Write("Choose from above options:");
             int.TryParse(Console.ReadLine(), out int option);
@@ -304,7 +309,7 @@ namespace Presentation.Services
             {
                 case 0: return "Abort";
                 case 1:
-                    managerId = "None";
+                    managerId = "NONE";
                     break;
                 case 2:
                     managerId = DisplayEmployeeId(emp, employeeList);
@@ -331,10 +336,10 @@ namespace Presentation.Services
         {
             for (int i = 0; i < rolesList.Count; i++)
             {
-                Console.WriteLine($"{i + 2}.  {rolesList[i].Name}");
+                Console.WriteLine($"{i + 2}. {rolesList[i].Name}");
             }
         }
-        public string ChooseRole()
+        public int ChooseRole()
         {
             List<RolesModel> rolesList = _roleManager.GetAll();
             int option;
@@ -347,28 +352,28 @@ namespace Presentation.Services
             int.TryParse(Console.ReadLine(), out option);
             if (option == 0)
             {
-                return "Abort";
+                return 0;
             }
             if (option == 1)
             {
                 /*RoleManagement roleManagement = new RoleManagement();*/
-                string result = _roleManagement.AddRole();
-                if (result != "Abort")
+                int result = _roleManagement.AddRole();
+                if (result != 0)
                 {
                     return result;
                 }
-                else if (result == "Failed")
+                else if (result == -1)
                 {
                     return ChooseRole();
                 }
                 else
                 {
-                    return "Abort";
+                    return 0;
                 }
             }
             if (option > 1 && option <= rolesList.Count + 1)
             {
-                return rolesList[option - 2].Name;
+                return rolesList[option - 2].Id;
             }
             else
             {
@@ -382,21 +387,29 @@ namespace Presentation.Services
 
             for (int j = 0; j < EmployeeModel.Headers.Length; j++)
             {
-                Console.WriteLine($"{j}. {EmployeeModel.Headers[j]}");
+                Console.WriteLine("{0,-4}{1,-15}", $"{j}.", $"{EmployeeModel.Headers[j]}");
             }
         }
-        public string ChooseDepartment(EmployeeModel employee)
+        public int ChooseDepartment(EmployeeModel employee)
         {
             List<RolesModel> rolesList = _roleManager.GetAll();
-            List<string> departments = new List<string>();
+            List<int> departmentIds = new List<int>();
             Console.WriteLine("Select Department:");
             Console.WriteLine("0. Exit");
             for (int j = 0; j < rolesList.Count; j++)
             {
-                if (rolesList[j].Name == employee.JobTitle)
+                if (rolesList[j].Id == employee.JobTitleId)
                 {
-                    departments.Add(rolesList[j].Department);
-                    Console.WriteLine($"{departments.Count}. {rolesList[j].Department}");
+                    departmentIds.Add(rolesList[j].DepartmentId);
+                    List<DepartmentModel> deptList = _departmentManager.GetAll();
+                    for (int k = 0; k < deptList.Count; k++)
+                    {
+                        if (rolesList[j].DepartmentId == deptList[k].Id)
+                        {
+                            Console.WriteLine($"{departmentIds.Count}. {deptList[k].Name}");
+                        }
+                    }
+
                 }
             }
 
@@ -404,11 +417,11 @@ namespace Presentation.Services
             int.TryParse(Console.ReadLine(), out int option);
             if (option == 0)
             {
-                return "Abort";
+                return 0;
             }
-            if (option > 0 && option <= departments.Count)
+            if (option > 0 && option <= departmentIds.Count)
             {
-                return departments[option - 1];
+                return departmentIds[option - 1];
             }
             else
             {
@@ -416,18 +429,27 @@ namespace Presentation.Services
             }
             return ChooseDepartment(employee);
         }
-        public string ChooseLocation(EmployeeModel employee)
+        public int ChooseLocation(EmployeeModel employee)
         {
             List<RolesModel> rolesList = _roleManager.GetAll();
-            List<string> locations = new List<string>();
+            List<int> locationIds = new List<int>();
             Console.WriteLine("Select Location:");
             Console.WriteLine("0. Exit");
             for (int j = 0; j < rolesList.Count; j++)
             {
-                if (rolesList[j].Name == employee.JobTitle)
+                if (rolesList[j].Id == employee.JobTitleId)
                 {
-                    locations.Add(rolesList[j].Location);
-                    Console.WriteLine($"{locations.Count}. {rolesList[j].Location}");
+                    locationIds.Add(rolesList[j].LocationId);
+                    List<LocationModel> locationModels = _locationManager.GetAll();
+                    for (int k = 0; k < locationModels.Count; k++)
+                    {
+                        if (locationModels[k].Id == rolesList[j].LocationId)
+                        {
+
+                            Console.WriteLine($"{locationIds.Count}. {locationModels[k].Name}");
+                        }
+
+                    }
                 }
             }
 
@@ -435,11 +457,11 @@ namespace Presentation.Services
             int.TryParse(Console.ReadLine(), out int option);
             if (option == 0)
             {
-                return "Abort";
+                return 0;
             }
-            if (option > 0 && option <= locations.Count)
+            if (option > 0 && option <= locationIds.Count)
             {
-                return locations[option - 1];
+                return locationIds[option - 1];
             }
             else
             {

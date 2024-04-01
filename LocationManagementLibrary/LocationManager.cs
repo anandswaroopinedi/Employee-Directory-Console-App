@@ -18,7 +18,7 @@ namespace LocationManagementLibrary
 
             if (!CheckLocationExists(location.Name, locationList))
             {
-                location.Id=locationList.Count+1;
+                location.Id = locationList.Count + 1;
                 locationList.Add(location);
                 _locationOperations.write(locationList);
                 return true;
@@ -32,6 +32,18 @@ namespace LocationManagementLibrary
         public List<LocationModel> GetAll()
         {
             return _locationOperations.read();
+        }
+        public string GetLocationName(int id)
+        {
+            List<LocationModel> locationList = _locationOperations.read();
+            for (int i = 0; i < locationList.Count; i++)
+            {
+                if (locationList[i].Id == id)
+                {
+                    return locationList[i].Name;
+                }
+            }
+            return "None";
         }
         public static bool CheckLocationExists(string loc, List<LocationModel> locationList)
         {

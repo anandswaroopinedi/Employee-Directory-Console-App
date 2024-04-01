@@ -12,25 +12,39 @@ namespace LocationManagementLibrary
         }
         public void AddLocation()
         {
-            Console.WriteLine("Enter Location Name:");
-            string location = Console.ReadLine();
-            
-            if (!string.IsNullOrEmpty(location))
+            Console.WriteLine("0. Exit");
+            Console.WriteLine("1. Enter Location");
+            Console.Write("Choose options from above:");
+            int.TryParse(Console.ReadLine(), out int option);
+            if (option == 0)
             {
-                LocationModel locationModel = new LocationModel();
-                locationModel.Name = location;
-                if (_locationManager.AddLocation(locationModel))
+                return;
+            }
+            else if (option == 1)
+            {
+                Console.Write("Enter Location Name:");
+                string location = Console.ReadLine().ToUpper();
+                if (!string.IsNullOrEmpty(location))
                 {
-                    Console.WriteLine("Location Added Successfully");
+                    LocationModel locationModel = new LocationModel();
+                    locationModel.Name = location;
+                    if (_locationManager.AddLocation(locationModel))
+                    {
+                        Console.WriteLine("Location Added Successfully");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Location already exists");
+                    }
                 }
                 else
                 {
-                    Console.WriteLine("Location already exists");
+                    Console.WriteLine("Location can't be null");
                 }
             }
             else
             {
-                Console.WriteLine("Location can't be null");
+                AddLocation();
             }
         }
         public void DisplayAll()

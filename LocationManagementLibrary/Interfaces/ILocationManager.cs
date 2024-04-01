@@ -6,5 +6,6 @@ namespace LocationManagementLibrary.Interfaces
     {
         public bool AddLocation(LocationModel location);
         public List<LocationModel> GetAll();
+        public string GetLocationName(int id);
     }
 }

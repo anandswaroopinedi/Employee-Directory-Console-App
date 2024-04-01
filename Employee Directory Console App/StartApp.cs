@@ -1,10 +1,8 @@
-﻿using DataAccessLayer.Interface;
-using Models;
-using Presentation.Interfaces;
+﻿using Presentation.Interfaces;
 
 namespace Presentation.Services
 {
-    public class StartApp 
+    public class StartApp
     {
         private readonly IDisplayMenuManagement _displayMenuManagement;
         public StartApp(IDisplayMenuManagement displayMenuManagement)

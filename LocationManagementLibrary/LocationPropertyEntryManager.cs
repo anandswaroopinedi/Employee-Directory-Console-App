@@ -22,7 +22,7 @@ namespace LocationManagementLibrary
                 Console.WriteLine($"{i + 2}.  {locationList[i].Name}");
             }
         }
-        public string ChooseLocation( )
+        public int ChooseLocation()
         {
             List<LocationModel> locationList = _locationManager.GetAll();
             Console.WriteLine("Locations:");
@@ -32,9 +32,9 @@ namespace LocationManagementLibrary
             Console.Write("Choose Location from above options:");
             int option;
             int.TryParse(Console.ReadLine(), out option);
-            if(option==0)
+            if (option == 0)
             {
-                return "Abort";
+                return 0;
             }
             if (option == 1)
             {
@@ -42,21 +42,21 @@ namespace LocationManagementLibrary
                 string location = Console.ReadLine().ToUpper();
                 LocationModel locationModel = new LocationModel();
                 locationModel.Name = location;
-                if(_locationManager.AddLocation(locationModel))
+                if (_locationManager.AddLocation(locationModel))
                 {
                     Console.WriteLine("Location Added Successfully");
-                    return locationModel.Name;
+                    return locationModel.Id;
                 }
                 else
                 {
                     Console.WriteLine("Entered Location is previously exists in the database.");
-                   return ChooseLocation();
+                    return ChooseLocation();
                 }
-                
+
             }
-            if (option > 1 && option <= locationList.Count+1)
+            if (option > 1 && option <= locationList.Count + 1)
             {
-                return locationList[option - 2].Name;
+                return locationList[option - 2].Id;
             }
             else
             {

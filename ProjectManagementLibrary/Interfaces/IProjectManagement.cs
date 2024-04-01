@@ -8,7 +8,7 @@ namespace ProjectManagementLibrary.Interfaces
 {
     public interface IProjectManagement
     {
-        public string AddProject();
+        public int AddProject();
         public void DisplayAll();
     }
 }

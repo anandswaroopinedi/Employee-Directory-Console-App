@@ -12,24 +12,35 @@ namespace DepartmentManagementLibrary
         }
         public void AddDepartment()
         {
-            Console.WriteLine("Enter Department Name:");
-            string department = Console.ReadLine();
-            if (!string.IsNullOrEmpty(department))
+            Console.WriteLine("0. Exit");
+            Console.WriteLine("1. Enter Department");
+            Console.Write("Choose options from above:");
+            int.TryParse(Console.ReadLine(), out int option);
+            if (option == 0)
             {
-                DepartmentModel departmentModel = new DepartmentModel();
-                departmentModel.Name = department;
-                if (_departmentManager.AddDepartment(departmentModel))
+                return;
+            }
+            else if (option == 1)
+            {
+                Console.Write("Enter Department Name:");
+                string department = Console.ReadLine().ToUpper();
+                if (!string.IsNullOrEmpty(department))
                 {
-                    Console.WriteLine("Department Added Successfully");
+                    DepartmentModel departmentModel = new DepartmentModel();
+                    departmentModel.Name = department;
+                    if (_departmentManager.AddDepartment(departmentModel))
+                    {
+                        Console.WriteLine("Department Added Successfully");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Department already exists");
+                    }
                 }
                 else
                 {
-                    Console.WriteLine("Department already exists");
+                    Console.WriteLine("Department can't be null");
                 }
-            }
-            else
-            {
-                Console.WriteLine("Department can't be null");
             }
         }
         public void DisplayAll()

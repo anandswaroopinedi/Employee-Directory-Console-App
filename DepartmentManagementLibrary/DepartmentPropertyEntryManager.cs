@@ -20,17 +20,7 @@ namespace DepartmentManagementLibrary
                 Console.WriteLine($"{i + 2}.  {departmentList[i].Name}");
             }
         }
-        public string CreateDepartmentRef()
-        {
-            DepartmentModel departmentModel = new DepartmentModel();
-            Console.Write("Enter New DepartMent Name:");
-            string name = Console.ReadLine().ToUpper();
-            departmentModel.Name = name;
-            _departmentManager.AddDepartment(departmentModel);
-            Console.WriteLine("Department Added successfully");
-            return departmentModel.Name;
-        }
-        public string ChooseDepartment()
+        public int ChooseDepartment()
         {
             List<DepartmentModel> departmentList = _departmentManager.GetAll();
             int option;
@@ -42,15 +32,28 @@ namespace DepartmentManagementLibrary
             int.TryParse(Console.ReadLine(), out option);
             if (option == 0)
             {
-                return "Abort";
+                return 0;
             }
             if (option == 1)
             {
-                return this.CreateDepartmentRef();
+                DepartmentModel departmentModel = new DepartmentModel();
+                Console.Write("Enter New DepartMent Name:");
+                string name = Console.ReadLine().ToUpper();
+                departmentModel.Name = name;
+                if (_departmentManager.AddDepartment(departmentModel))
+                {
+                    Console.WriteLine("Department Added successfully");
+                    return departmentModel.Id;
+                }
+                else
+                {
+                    Console.WriteLine("Entered Department is previously exists in the database.");
+                    return ChooseDepartment();
+                }
             }
-            if (option > 1 && option <= departmentList.Count+1)
+            if (option > 1 && option <= departmentList.Count + 1)
             {
-                return departmentList[option - 2].Name;
+                return departmentList[option - 2].Id;
             }
             else
             {

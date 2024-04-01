@@ -17,11 +17,11 @@ namespace Presentation.Services
         private readonly IRoleManagement _roleManagement;
         private readonly IEmployeeManager _employeeManager;
         private readonly IProjectManagement _projectManagement;
-        private static List<String> _startAppDisplayMenu=new List<String>() { "Exit", "Employee Management", "Role Management", "Department and Location Management" };
+        private static List<String> _startAppDisplayMenu = new List<String>() { "Exit", "Employee Management", "Role Management", "Department and Location Management" };
         private static List<String> _employeeDisplayMenu = new List<string>() { "Go Back", "Add Employee", "Display All", "Display One", "Edit Employee", "Delete Employee" };
         private static List<String> _roleDisplaymenu = new List<string>() { "Go Back", "Add Role", "Display All" };
-        public static List<String> _departmentLocationDisplaymenu = new List<String>() { "Go Back", "Add Department", "Display Departments", "Add Location", "Display Locations","Add Project","Display Projects" };
-        public DisplayMenuManagement(IEmployeeManagement employeeManagement, ILocationManagement locationManagement, IDepartmentManagement departmentManagement, IRoleManagement roleManagement,IEmployeeManager employeeManager,IProjectManagement projectManagement)
+        public static List<String> _departmentLocationDisplaymenu = new List<String>() { "Go Back", "Add Department", "Display Departments", "Add Location", "Display Locations", "Add Project", "Display Projects" };
+        public DisplayMenuManagement(IEmployeeManagement employeeManagement, ILocationManagement locationManagement, IDepartmentManagement departmentManagement, IRoleManagement roleManagement, IEmployeeManager employeeManager, IProjectManagement projectManagement)
         {
             _employeeManagement = employeeManagement;
             _departmentManagement = departmentManagement;
@@ -32,7 +32,7 @@ namespace Presentation.Services
         }
         private static void DisplayMenus(List<string> menu)
         {
-            for (int i = 0;i<menu.Count;i++)
+            for (int i = 0; i < menu.Count; i++)
             {
                 Console.WriteLine($"{i}. {menu[i]}");
             }
@@ -61,7 +61,7 @@ namespace Presentation.Services
                     case 3:
                         this.DepartmentLocationDisplayMenu();
                         break;
-                    
+
                     default:
                         Console.WriteLine("Select option from the above list only\n");
                         break;
@@ -86,7 +86,7 @@ namespace Presentation.Services
                 case 1:
                     _employeeManagement.AddEmployee();
                     break;
-                
+
                 default:
                     Console.WriteLine("Select option from the above list only");
                     break;
@@ -98,7 +98,7 @@ namespace Presentation.Services
         private bool EmployeeDisplayAdjustedMenu()
         {
             bool flag = true;
-            
+
             Console.WriteLine("Options :");
             DisplayMenus(_employeeDisplayMenu);
             Console.Write("Choose any option from above:");
@@ -137,7 +137,7 @@ namespace Presentation.Services
             bool flag = true;
             while (flag)
             {
-                if (_employeeManager.GetAll().Count< 1)
+                if (_employeeManager.GetAll().Count < 1)
                 {
                     flag = EmployeeDisplayDefaultMenu();
                 }
@@ -170,7 +170,7 @@ namespace Presentation.Services
                     case 2:
                         _roleManagement.DisplayAll();
                         break;
-                    
+
                     default:
                         Console.WriteLine("Select option from the above list only\n");
                         break;

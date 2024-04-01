@@ -4,7 +4,7 @@ using ProjectManagementLibrary.Interfaces;
 
 namespace ProjectManagementLibrary
 {
-    public class ProjectManager:IProjectManager
+    public class ProjectManager : IProjectManager
     {
         private readonly IProjectOperations _projectOperations;
         public ProjectManager(IProjectOperations projectOperations)
@@ -43,6 +43,18 @@ namespace ProjectManagementLibrary
                 }
             }
             return false;
+        }
+        public string GetProjectName(int id)
+        {
+            List<ProjectModel> projectList= _projectOperations.read();
+            for(int i = 0;i < projectList.Count;i++)
+            {
+                if (projectList[i].Id ==id)
+                {
+                    return projectList[i].Name;
+                }
+            }
+            return "";
         }
     }
 }

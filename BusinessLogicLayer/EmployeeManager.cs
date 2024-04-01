@@ -2,7 +2,10 @@
 
 using BusinessLogicLayer.Interfaces;
 using DataAccessLayer.Interface;
+using DepartmentManagementLibrary.Interfaces;
+using LocationManagementLibrary.Interfaces;
 using Models;
+using ProjectManagementLibrary.Interfaces;
 
 
 namespace BusinessLogicLayer
@@ -10,9 +13,11 @@ namespace BusinessLogicLayer
     public class EmployeeManager : IEmployeeManager
     {
         private readonly IEmployeeOperations _employeeOperations;
+
         public EmployeeManager(IEmployeeOperations employeeOperations)
         {
             _employeeOperations = employeeOperations;
+
         }
         public void Create(EmployeeModel employee)
         {
@@ -48,9 +53,9 @@ namespace BusinessLogicLayer
                 return true;
             }
         }
-        public  int CheckIdExists(string id)
+        public int CheckIdExists(string id)
         {
-            List<EmployeeModel>employeeList= _employeeOperations.read();
+            List<EmployeeModel> employeeList = _employeeOperations.read();
             for (int i = 0; i < employeeList.Count; i++)
             {
                 if (employeeList[i].Id == id)
@@ -58,7 +63,7 @@ namespace BusinessLogicLayer
             }
             return -1;
         }
-        public  List<EmployeeModel>GetAll()
+        public List<EmployeeModel> GetAll()
         {
             return _employeeOperations.read();
         }
