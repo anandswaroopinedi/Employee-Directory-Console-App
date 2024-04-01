@@ -8,13 +8,14 @@ public class RolePropertyEntryManager : IRolePropertyEntryManager
     {
         string description = "";
         Console.WriteLine("Description:");
+        Console.WriteLine("0. Exit");
         Console.WriteLine("1. Upload Later");
         Console.WriteLine("2. Enter Description");
-        Console.WriteLine("3. Exit");
         Console.Write("Choose from above options:");
         int.TryParse(Console.ReadLine(), out int option);
         switch (option)
         {
+            case 0: return "Abort";
             case 1:
                 description = "None";
                 return description;
@@ -29,7 +30,7 @@ public class RolePropertyEntryManager : IRolePropertyEntryManager
                 {
                     return description;
                 }
-            case 3:return "Abort";
+            
             default:
                 Console.WriteLine("Select option from the above list only");
                 return GetDescription();

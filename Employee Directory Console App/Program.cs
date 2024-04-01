@@ -9,6 +9,8 @@ using LocationManagementLibrary.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using Presentation.Interfaces;
 using Presentation.Services;
+using ProjectManagementLibrary;
+using ProjectManagementLibrary.Interfaces;
 
 namespace EmployeeDirectoryConsoleApp
 {
@@ -33,15 +35,16 @@ namespace EmployeeDirectoryConsoleApp
             services.AddTransient<ILocationPropertyEntryManager, LocationPropertyEntryManager>();
             services.AddTransient<IRolePropertyEntryManager, RolePropertyEntryManager>();
             services.AddTransient<IDepartmentPropertyEntryManager, DepartmentPropertyEntryManager>();
+            services.AddTransient<IProjectOperations, ProjectOperations>();
+            services.AddTransient<IProjectManagement,ProjectManagement>();
+            services.AddTransient<IProjectManager, ProjectManager>();
+            services.AddTransient<IDepartmentManagement,DepartmentManagement>();
+            services.AddTransient<ILocationManagement,LocationManagement>();
             services.AddSingleton<StartApp>();
             services.AddTransient<IDisplayMenuManagement, DisplayMenuManagement>();
             var serviceProvider = services.BuildServiceProvider();
             var startApp = serviceProvider.GetRequiredService<StartApp>();
             startApp.Run();
         }
-
-
     }
-
-
 }

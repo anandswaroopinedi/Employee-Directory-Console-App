@@ -52,5 +52,35 @@
     "Department": "PROD ENGG",
     "Location": "OI",
     "Description": "None"
+  },
+  {
+    "Name": "DFE",
+    "Department": "PROD ENGG",
+    "Location": "OI",
+    "Description": "None"
+  },
+  {
+    "Name": "WQAS",
+    "Department": "QA",
+    "Location": "OI",
+    "Description": "None"
+  },
+  {
+    "Name": "DEW",
+    "Department": "QA",
+    "Location": "LONDON",
+    "Description": "None"
+  },
+  {
+    "Name": "SWE",
+    "Department": "SDE",
+    "Location": "ORCAS",
+    "Description": "None"
+  },
+  {
+    "Name": "GHU",
+    "Department": "WQ",
+    "Location": "QW",
+    "Description": "None"
   }
 ]

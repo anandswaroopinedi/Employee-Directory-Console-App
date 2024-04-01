@@ -9,20 +9,17 @@ namespace Presentation.Services
 {
     public class EmployeeManagement : IEmployeeManagement
     {
-
-        public static List<EmployeeModel> EmployeeList = new List<EmployeeModel>();
-        private static List<string> _projectList = new List<string>() { "Bavy's", "Console Project", "Internal Project", "Microsoft Project" };
         private readonly IEmployeeManager _employeeManager;
         private readonly IEmployeePropertyEntryManager _employeePropertyEntryManager;
-        public EmployeeManagement(IEmployeeManager emp, IEmployeePropertyEntryManager employeePropertyEntryManager, ILocationPropertyEntryManager locationPropertyEntryManager, IDepartmentPropertyEntryManager departmentPropertyEntryManager)
+        private string _OutputFormat = "{0,-8} {1,-18} {2,-12} {3,-18} {4,-12} {5,-12} {6,-12} {7,-12} {8,-12} {9,-15} {10,-12}";
+        public EmployeeManagement(IEmployeeManager employee, IEmployeePropertyEntryManager employeePropertyEntryManager, ILocationPropertyEntryManager locationPropertyEntryManager, IDepartmentPropertyEntryManager departmentPropertyEntryManager)
         {
-            _employeeManager = emp;
+            _employeeManager = employee;
             _employeePropertyEntryManager = employeePropertyEntryManager;
         }
-        public bool GetUpdateDetails(EmployeeModel employee)
+        public bool GetUpdateDetails(EmployeeModel employee, List<EmployeeModel> employeeList)
         {
             _employeePropertyEntryManager.DisplayHeaders();
-            Console.WriteLine("12: Exit By Applying Changes");
             Console.Write("\nChoose the details to change:");
             int.TryParse(Console.ReadLine(), out int option);
             bool res = false;
@@ -100,18 +97,38 @@ namespace Presentation.Services
                         }
                         break;
                     case 7:
-                        value = _employeePropertyEntryManager.ChooseRole(ref RoleManagement.RoleList);
+                        value = _employeePropertyEntryManager.ChooseRole();
+                        if (value == "Abort")
+                        {
+                            operation = false;
+                            break;
+                        }
+                        else
+                        {
+                            employee.JobTitle = value;
+                        }
+                        value = _employeePropertyEntryManager.ChooseDepartment(employee);
+                        if (value == "Abort")
+                        {
+                            operation = false;
+                            break;
+                        }
+                        else
+                        {
+                            employee.Department = value;
+                        }
+                        value = _employeePropertyEntryManager.ChooseLocation(employee);
                         if (value == "Abort")
                         {
                             operation = false;
                         }
                         else
                         {
-                            employee.JobTitle = value;
+                            employee.Location = value;
                         }
                         break;
                     case 8:
-                        value = _employeePropertyEntryManager.ChooseLocation(employee, RoleManagement.RoleList);
+                        value = _employeePropertyEntryManager.ChooseLocation(employee);
                         if (value == "Abort")
                         {
                             operation = false;
@@ -122,7 +139,7 @@ namespace Presentation.Services
                         }
                         break;
                     case 9:
-                        value = _employeePropertyEntryManager.ChooseDepartment(employee, RoleManagement.RoleList);
+                        value = _employeePropertyEntryManager.ChooseDepartment(employee);
                         if (value == "Abort")
                         {
                             operation = false;
@@ -133,7 +150,7 @@ namespace Presentation.Services
                         }
                         break;
                     case 10:
-                        value = _employeePropertyEntryManager.ChooseManager(employee, EmployeeList);
+                        value = _employeePropertyEntryManager.ChooseManager(employee, employeeList);
                         if (value == "Abort")
                         {
                             operation = false;
@@ -144,7 +161,7 @@ namespace Presentation.Services
                         }
                         break;
                     case 11:
-                        value = _employeePropertyEntryManager.GetProjectName(_projectList);
+                        value = _employeePropertyEntryManager.GetProjectName();
                         if (value == "Abort")
                         {
                             operation = false;
@@ -162,7 +179,6 @@ namespace Presentation.Services
                 {
                     res = true;
                     _employeePropertyEntryManager.DisplayHeaders();
-                    Console.WriteLine("12: Exit By Applying Changes");
                     Console.Write("\nChoose the details to change:");
                     int.TryParse(Console.ReadLine(), out option);
                 }
@@ -175,45 +191,46 @@ namespace Presentation.Services
             return res;
         }
         //To Record the details of employee for update.
-        public static string GetManagerName(EmployeeModel e)
+        public static string GetManagerName(EmployeeModel e, List<EmployeeModel> employeeList)
         {
-            for (int i = 0; i < EmployeeList.Count; i++)
+            for (int i = 0; i < employeeList.Count; i++)
             {
-                if (EmployeeList[i].Id == e.ManagerId)
+                if (employeeList[i].Id == e.ManagerId)
                 {
-                    return EmployeeList[i].FirstName + " " + EmployeeList[i].LastName;
+                    return employeeList[i].FirstName + " " + employeeList[i].LastName;
                 }
             }
             return "No Manager";
         }
-        public static void DisplayEmployeeID()
+        public static void DisplayEmployeeID(List<EmployeeModel> employeeList)
         {
-            for (int i = 0; i < EmployeeList.Count; i++)
+            for (int i = 0; i < employeeList.Count; i++)
             {
-                Console.WriteLine("{0,-4}{1,-8}", $"{i + 1}.", $"{EmployeeList[i].Id}");
+                Console.WriteLine("{0,-4}{1,-8}", $"{i + 1}.", $"{employeeList[i].Id}");
             }
         }
         public void UpdateEmployee()
         {
+            List<EmployeeModel> employeeList = _employeeManager.GetAll();
             Console.WriteLine("Employee Id's:");
-            DisplayEmployeeID();
-            Console.WriteLine($"{EmployeeList.Count + 1}. Exit");
+            Console.WriteLine("0. Exit");
+            DisplayEmployeeID(employeeList);
             Console.Write("Choose from the above list:");
             int.TryParse(Console.ReadLine(), out int index);
-            if (index == EmployeeList.Count + 1)
+            if (index == 0)
             {
                 return;
             }
-            if (index > 0 && index <= EmployeeList.Count)
+            if (index > 0 && index <= employeeList.Count)
             {
-                bool res = GetUpdateDetails(EmployeeList[index]);
+                bool res = GetUpdateDetails(employeeList[index-1], employeeList);
                 if (res)
                 {
-                    _employeeManager.Update(EmployeeList[index], ref EmployeeList);
-                    string managerName = GetManagerName(EmployeeList[index]);
-                    Console.WriteLine("{0,-8} {1,-18} {2,-12} {3,-18} {4,-12} {5,-12} {6,-12} {7,-12} {8,-12} {9,-15} {10,-12} ", "Id", "Full Name", "DateOfBirth", "Email", "MobileNumber", "JoinDate", "Location", "JobTitle", "Department", "ManagerName", "Project");
+                    _employeeManager.Update(employeeList[index-1], index - 1);
+                    string managerName = GetManagerName(employeeList[index-1], employeeList);
+                    Console.WriteLine(_OutputFormat, "Id", "Full Name", "DateOfBirth", "Email", "MobileNumber", "JoinDate", "Location", "JobTitle", "Department", "ManagerName", "Project");
                     Console.WriteLine(new string('-', 158));
-                    Console.WriteLine("{0,-8} {1,-18} {2,-12} {3,-18} {4,-12} {5,-12} {6,-12} {7,-12} {8,-12} {9,-15} {10,-12} ", EmployeeList[index].Id, EmployeeList[index].FirstName + " " + EmployeeList[index].LastName, EmployeeList[index].DateOfBirth, EmployeeList[index].Email, EmployeeList[index].MobileNumber, EmployeeList[index].JoinDate, EmployeeList[index].Location, EmployeeList[index].JobTitle, EmployeeList[index].Department, managerName, EmployeeList[index].Project);
+                    Console.WriteLine(_OutputFormat, employeeList[index - 1].Id, employeeList[index-1].FirstName + " " + employeeList[index - 1].LastName, employeeList[index - 1].DateOfBirth, employeeList[index - 1].Email, employeeList[index-1].MobileNumber, employeeList[index - 1].JoinDate, employeeList[index-1].Location, employeeList[index - 1].JobTitle, employeeList[index-1].Department, managerName, employeeList[index - 1].Project);
                     Console.WriteLine("Employee Updated successfully");
                 }
                 else
@@ -232,18 +249,18 @@ namespace Presentation.Services
         public void DeleteEmployee()
         {
             Console.WriteLine("Employee Id's:");
-            DisplayEmployeeID();
-            Console.WriteLine($"{EmployeeList.Count + 1}. Exit");
+            List<EmployeeModel> employeeList = _employeeManager.GetAll();
+            Console.WriteLine($"Exit");
+            DisplayEmployeeID(employeeList);
             Console.Write("Enter Employee Id/Enter exit:");
             string id = Console.ReadLine()!.ToUpper();
             if (id == "EXIT")
             {
                 return;
             }
-            int index = CheckIdExists(id);
-            if (index != -1)
+            if (_employeeManager.Delete(id))
             {
-                _employeeManager.Delete(EmployeeList[index], ref EmployeeList);
+
                 Console.WriteLine("Employee deleted successfully");
             }
             else
@@ -254,23 +271,23 @@ namespace Presentation.Services
         //To Display Employee through their id
         public void DisplayOne()
         {
+            List<EmployeeModel> employeeList = _employeeManager.GetAll();
             Console.WriteLine("Employee Id's:");
-            DisplayEmployeeID();
-            Console.WriteLine($"{EmployeeList.Count + 1}. Exit");
+            Console.WriteLine("0. Exit");
+            DisplayEmployeeID(employeeList);
             Console.Write("Choose from the above list:");
             int.TryParse(Console.ReadLine(), out int index);
-            if (index == EmployeeList.Count + 1)
+            if (index == 0)
             {
                 return;
             }
-            if (index > 0 && index <= EmployeeList.Count)
+            if (index > 0 && index <= employeeList.Count)
             {
-                if (EmployeeList[index - 1].Id != "None")
+                if (employeeList[index - 1].Id != "None")
                 {
-                    string managerName = GetManagerName(EmployeeList[index - 1]);
-                    Console.WriteLine("{0,-8} {1,-24} {2,-12} {3,-18} {4,-12} {5,-12} {6,-15} {7,-12} ", "Id", "Full Name", "JoinDate", "Location", "JobTitle", "Department", "ManagerName", "Project");
-                    Console.WriteLine(new string('-', 125));
-                    Console.WriteLine("{0,-8} {1,-24} {2,-12} {3,-18} {4,-12} {5,-12} {6,-15} {7,-12} ", EmployeeList[index - 1].Id, EmployeeList[index - 1].FirstName + " " + EmployeeList[index - 1].LastName, EmployeeList[index - 1].JoinDate, EmployeeList[index - 1].Location, EmployeeList[index - 1].JobTitle, EmployeeList[index - 1].Department, managerName, EmployeeList[index - 1].Project);
+                    string managerName = GetManagerName(employeeList[index - 1], employeeList);
+                    Console.WriteLine("{0,-8} {1,-24} {2,-12} {3,-18} {4,-12} {5,-12} {6,-15} {7,-12}", "Id", "Full Name", "JoinDate", "JobTitle", "Location", "Department", "ManagerName", "Project");
+                    ConsoleEmployee(employeeList[index - 1], GetManagerName(employeeList[index - 1], employeeList));
                 }
                 else
                 {
@@ -282,27 +299,23 @@ namespace Presentation.Services
                 Console.WriteLine("Choose from above options only.");
             }
         }
+        public static void ConsoleEmployee(EmployeeModel employee, string managerName)
+        {
+            Console.WriteLine(new string('-', 125));
+            Console.WriteLine("{0,-8} {1,-24} {2,-12} {3,-18} {4,-12} {5,-12} {6,-15} {7,-12} ", employee.Id, employee.FirstName + " " + employee.LastName, employee.JoinDate, employee.JobTitle, employee.Location, employee.Department, managerName, employee.Project);
+        }
         public void DisplayAll()
         {
-            Console.WriteLine($"\nNo of Employee records in the Database are: {EmployeeList.Count}");
-            Console.WriteLine("{0,-8} {1,-24} {2,-12} {3,-18} {4,-12} {5,-12} {6,-15} {7,-12} ", "Id", "Full Name", "JoinDate", "Location", "JobTitle", "Department", "ManagerName", "Project");
-            foreach (var employee in EmployeeList)
+            List<EmployeeModel> employeeList = _employeeManager.GetAll();
+            Console.WriteLine($"\nNo of Employee records in the Database are: {employeeList.Count}");
+            Console.WriteLine("{0,-8} {1,-24} {2,-12} {3,-18} {4,-12} {5,-12} {6,-15} {7,-12} ", "Id", "Full Name", "JoinDate", "JobTitle", "Location", "Department", "ManagerName", "Project");
+            foreach (EmployeeModel employee in employeeList)
             {
-                string managerName = GetManagerName(employee);
-                Console.WriteLine(new string('-', 125));
-                Console.WriteLine("{0,-8} {1,-24} {2,-12} {3,-18} {4,-12} {5,-12} {6,-15} {7,-12} ", employee.Id, employee.FirstName + " " + employee.LastName, employee.JoinDate, employee.Location, employee.JobTitle, employee.Department, managerName, employee.Project);
+                ConsoleEmployee(employee, GetManagerName(employee, employeeList));
             }
         }
-        public static int CheckIdExists(string id)
-        {
-            for (int i = 0; i < EmployeeList.Count; i++)
-            {
-                if (EmployeeList[i].Id == id)
-                    return i;
-            }
-            return -1;
-        }
-        private bool GetEmployeeInputValues(EmployeeModel employee)
+
+        private bool GetEmployeeInputValues(EmployeeModel employee, List<EmployeeModel> employeeList)
         {
             employee.FirstName = _employeePropertyEntryManager.GetFirstName();
             if (employee.FirstName == "Abort")
@@ -334,27 +347,27 @@ namespace Presentation.Services
             {
                 return false;
             }
-            employee.JobTitle = _employeePropertyEntryManager.ChooseRole(ref RoleManagement.RoleList);
+            employee.JobTitle = _employeePropertyEntryManager.ChooseRole();
             if (employee.JobTitle == "Abort")
             {
                 return false;
             }
-            employee.Location = _employeePropertyEntryManager.ChooseLocation(employee, RoleManagement.RoleList);
+            employee.Location = _employeePropertyEntryManager.ChooseLocation(employee);
             if (employee.Location == "Abort")
             {
                 return false;
             }
-            employee.Department = _employeePropertyEntryManager.ChooseDepartment(employee, RoleManagement.RoleList);
+            employee.Department = _employeePropertyEntryManager.ChooseDepartment(employee);
             if (employee.Department == "Abort")
             {
                 return false;
             }
-            employee.ManagerId = _employeePropertyEntryManager.ChooseManager(employee, EmployeeList);
+            employee.ManagerId = _employeePropertyEntryManager.ChooseManager(employee, employeeList);
             if (employee.ManagerId == "Abort")
             {
                 return false;
             }
-            employee.Project = _employeePropertyEntryManager.GetProjectName(_projectList);
+            employee.Project = _employeePropertyEntryManager.GetProjectName();
             if (employee.Project == "Abort")
             {
                 return false;
@@ -367,11 +380,11 @@ namespace Presentation.Services
             while (flag)
             {
                 Console.WriteLine("Options:");
+                Console.WriteLine("0. Exit");
                 Console.WriteLine("1. Choose to Enter Id");
-                Console.WriteLine("2. Exit");
                 Console.Write("Choose options from above List:");
                 int.TryParse(Console.ReadLine(), out int option);
-                if (option == 2)
+                if (option == 0)
                 {
                     flag = false;
                 }
@@ -379,14 +392,15 @@ namespace Presentation.Services
                 {
                     Console.Write("Enter Employee Id(TZ0001)*:");
                     string empId = Console.ReadLine().ToUpper();
-                    if (Validation.ValidateEmployeeId(empId) && CheckIdExists(empId) == -1)
+                    if (Validation.ValidateEmployeeId(empId) && _employeeManager.CheckIdExists(empId) == -1)
                     {
                         EmployeeModel emp = new EmployeeModel();
                         emp.Id = empId;
-                        bool addResult = GetEmployeeInputValues(emp);
+                        List<EmployeeModel> employeeList = new List<EmployeeModel>();
+                        bool addResult = GetEmployeeInputValues(emp, employeeList);
                         if (addResult)
                         {
-                            _employeeManager.Create(emp, ref EmployeeList);
+                            _employeeManager.Create(emp);
                         }
                         flag = false;
                     }

@@ -8,8 +8,8 @@
     "MobileNumber": "None",
     "JoinDate": "23/05/2001",
     "Location": "HYDERABAD",
-    "JobTitle": "FULL STACK",
-    "Department": "QA",
+    "JobTitle": "EE",
+    "Department": "PROD ENGG",
     "ManagerId": "None",
     "Project": "Internal Project"
   },
@@ -22,8 +22,8 @@
     "MobileNumber": "None",
     "JoinDate": "22/03/2000",
     "Location": "HYDERABAD",
-    "JobTitle": "TESTER",
-    "Department": "QA",
+    "JobTitle": "HR",
+    "Department": "PROD ENGG",
     "ManagerId": "TZ0002",
     "Project": "None"
   },
@@ -64,7 +64,7 @@
     "MobileNumber": "None",
     "JoinDate": "22/03/1999",
     "Location": "HYDERABAD",
-    "JobTitle": "TESTER",
+    "JobTitle": "SWE",
     "Department": "PROD ENGG",
     "ManagerId": "TZ0006",
     "Project": "None"
@@ -222,5 +222,19 @@
     "Department": "PROD ENGG",
     "ManagerId": "TZ0002",
     "Project": "Console Project"
+  },
+  {
+    "Id": "TZ0098",
+    "FirstName": "lk",
+    "LastName": "polk",
+    "DateOfBirth": "None",
+    "Email": "k@gmail.com",
+    "MobileNumber": "None",
+    "JoinDate": "22/07/2000",
+    "Location": "HYDERABAD",
+    "JobTitle": "EE",
+    "Department": "PROD ENGG",
+    "ManagerId": "None",
+    "Project": "Internal Project"
   }
 ]

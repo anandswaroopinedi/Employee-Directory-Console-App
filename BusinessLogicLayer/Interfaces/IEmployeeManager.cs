@@ -4,8 +4,10 @@ namespace BusinessLogicLayer.Interfaces
 {
     public interface IEmployeeManager
     {
-        public void Create(EmployeeModel employee,ref List<EmployeeModel> employeeList);
-        public void Update(EmployeeModel employee,ref List<EmployeeModel> employeeList);
-        public void Delete(EmployeeModel model,ref List<EmployeeModel> employeeModels);
+        public void Create(EmployeeModel employee);
+        public void Update(EmployeeModel employee,int index);
+        public bool Delete(string id);
+        public int CheckIdExists(string id);
+        public List<EmployeeModel> GetAll();
     }
 }

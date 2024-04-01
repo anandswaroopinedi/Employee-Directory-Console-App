@@ -9,52 +9,59 @@ namespace LocationManagementLibrary
     public class LocationPropertyEntryManager : ILocationPropertyEntryManager
     {
         private readonly ILocationManager _locationManager;
-        private readonly ILocationOperations _locationOperations;
-        public LocationPropertyEntryManager(ILocationManager locationManager, ILocationOperations locationOperations)
+        public LocationPropertyEntryManager(ILocationManager locationManager)
         {
             _locationManager = locationManager;
-            _locationOperations = locationOperations;
         }
 
-        public string CreateLocationRef(ref List<LocationModel> locationList)
-        {
-            LocationModel locationModel = new LocationModel();
-            _locationManager.AddLocation(locationModel, ref locationList);
-            _locationOperations.write(locationList);
-            return locationModel.Name;
-        }
         public static void DisplayLocationList(List<LocationModel> locationList)
         {
+
             for (int i = 0; i < locationList.Count; i++)
             {
-                Console.WriteLine($"{i + 1}.  {locationList[i].Name}");
+                Console.WriteLine($"{i + 2}.  {locationList[i].Name}");
             }
         }
-        public string ChooseLocation(ref List<LocationModel> locationList)
+        public string ChooseLocation( )
         {
+            List<LocationModel> locationList = _locationManager.GetAll();
             Console.WriteLine("Locations:");
-            Console.WriteLine("0.  Add New Location");
+            Console.WriteLine("0. Exit");
+            Console.WriteLine("1. Add New Location");
             DisplayLocationList(locationList);
-            Console.WriteLine($"{locationList.Count+1}. Exit");
             Console.Write("Choose Location from above options:");
             int option;
             int.TryParse(Console.ReadLine(), out option);
-            if(option==locationList.Count+1)
+            if(option==0)
             {
                 return "Abort";
             }
-            if (option == 0)
+            if (option == 1)
             {
-                return this.CreateLocationRef(ref locationList);
+                Console.Write("Enter new Location:");
+                string location = Console.ReadLine().ToUpper();
+                LocationModel locationModel = new LocationModel();
+                locationModel.Name = location;
+                if(_locationManager.AddLocation(locationModel))
+                {
+                    Console.WriteLine("Location Added Successfully");
+                    return locationModel.Name;
+                }
+                else
+                {
+                    Console.WriteLine("Entered Location is previously exists in the database.");
+                   return ChooseLocation();
+                }
+                
             }
-            if (option > 0 && option <= locationList.Count)
+            if (option > 1 && option <= locationList.Count+1)
             {
-                return locationList[option - 1].Name;
+                return locationList[option - 2].Name;
             }
             else
             {
                 Console.WriteLine("Select option from the above list only");
-                return ChooseLocation(ref locationList);
+                return ChooseLocation();
             }
         }
     }

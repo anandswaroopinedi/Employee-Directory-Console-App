@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "Models\Models.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccessLayer", "DataAccessLayer\DataAccessLayer.csproj", "{47E186CF-2BA2-4399-9EC9-5D53A9939B95}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectManagementLibrary", "ProjectManagementLibrary\ProjectManagementLibrary.csproj", "{0870536C-D9C4-4A13-8ED5-70F3AF606232}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{47E186CF-2BA2-4399-9EC9-5D53A9939B95}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{47E186CF-2BA2-4399-9EC9-5D53A9939B95}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{47E186CF-2BA2-4399-9EC9-5D53A9939B95}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0870536C-D9C4-4A13-8ED5-70F3AF606232}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0870536C-D9C4-4A13-8ED5-70F3AF606232}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0870536C-D9C4-4A13-8ED5-70F3AF606232}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0870536C-D9C4-4A13-8ED5-70F3AF606232}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

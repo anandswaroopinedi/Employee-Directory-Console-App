@@ -1,25 +1,41 @@
-﻿using DepartmentManagementLibrary.Interfaces;
+﻿using BusinessLogicLayer.Interfaces;
+using DepartmentManagementLibrary.Interfaces;
+using LocationManagementLibrary;
 using LocationManagementLibrary.Interfaces;
 using Models;
 using Presentation.Interfaces;
+using ProjectManagementLibrary;
+using ProjectManagementLibrary.Interfaces;
 
 namespace Presentation.Services
 {
     public class DisplayMenuManagement : IDisplayMenuManagement
     {
         private readonly IEmployeeManagement _employeeManagement;
-        /*private readonly IRoleDisplayMenuManagement _roleDisplayMenuManagement;*/
-        private readonly ILocationManager _locationManager;
-        private readonly IDepartmentManager _departmentManager;
+        private readonly ILocationManagement _locationManagement;
+        private readonly IDepartmentManagement _departmentManagement;
         private readonly IRoleManagement _roleManagement;
-        public DisplayMenuManagement(IEmployeeManagement employeeManagement,/* IRoleDisplayMenuManagement roleDisplayMenuManagement,*/ ILocationManager locationManager, IDepartmentManager departmentManager, IRoleManagement roleManagement)
+        private readonly IEmployeeManager _employeeManager;
+        private readonly IProjectManagement _projectManagement;
+        private static List<String> _startAppDisplayMenu=new List<String>() { "Exit", "Employee Management", "Role Management", "Department and Location Management" };
+        private static List<String> _employeeDisplayMenu = new List<string>() { "Go Back", "Add Employee", "Display All", "Display One", "Edit Employee", "Delete Employee" };
+        private static List<String> _roleDisplaymenu = new List<string>() { "Go Back", "Add Role", "Display All" };
+        public static List<String> _departmentLocationDisplaymenu = new List<String>() { "Go Back", "Add Department", "Display Departments", "Add Location", "Display Locations","Add Project","Display Projects" };
+        public DisplayMenuManagement(IEmployeeManagement employeeManagement, ILocationManagement locationManagement, IDepartmentManagement departmentManagement, IRoleManagement roleManagement,IEmployeeManager employeeManager,IProjectManagement projectManagement)
         {
             _employeeManagement = employeeManagement;
-            /*_roleDisplayMenuManagement = roleDisplayMenuManagement;*/
-            _departmentManager = departmentManager;
-            _locationManager = locationManager;
+            _departmentManagement = departmentManagement;
+            _locationManagement = locationManagement;
             _roleManagement = roleManagement;
-
+            _employeeManager = employeeManager;
+            _projectManagement = projectManagement;
+        }
+        private static void DisplayMenus(List<string> menu)
+        {
+            for (int i = 0;i<menu.Count;i++)
+            {
+                Console.WriteLine($"{i}. {menu[i]}");
+            }
         }
         public void StartAppDisplayOptionMenu()
         {
@@ -27,15 +43,15 @@ namespace Presentation.Services
             bool flag = true;
             while (flag)
             {
-                Console.WriteLine("1. Employee Management");
-                Console.WriteLine("2. Role Management");
-                Console.WriteLine("3. Department and Location Management");
-                Console.WriteLine("4. Exit");
+                DisplayMenus(_startAppDisplayMenu);
                 Console.Write("Choose any option from above:");
                 int option;
                 int.TryParse(Console.ReadLine(), out option);
                 switch (option)
                 {
+                    case 0:
+                        flag = false;
+                        break;
                     case 1:
                         this.EmployeeManagementDisplayMenu();
                         break;
@@ -45,9 +61,7 @@ namespace Presentation.Services
                     case 3:
                         this.DepartmentLocationDisplayMenu();
                         break;
-                    case 4:
-                        flag = false;
-                        break;
+                    
                     default:
                         Console.WriteLine("Select option from the above list only\n");
                         break;
@@ -59,20 +73,20 @@ namespace Presentation.Services
         {
             bool flag = true;
             Console.WriteLine("Options :");
+            Console.WriteLine("0. Go Back");
             Console.WriteLine("1. Add Employee");
-            Console.WriteLine("2. Go Back");
             Console.Write("Choose any1 option from above:");
             int option;
             int.TryParse(Console.ReadLine(), out option);
             switch (option)
             {
-
+                case 0:
+                    flag = false;
+                    break;
                 case 1:
                     _employeeManagement.AddEmployee();
                     break;
-                case 2:
-                    flag = false;
-                    break;
+                
                 default:
                     Console.WriteLine("Select option from the above list only");
                     break;
@@ -84,18 +98,17 @@ namespace Presentation.Services
         private bool EmployeeDisplayAdjustedMenu()
         {
             bool flag = true;
+            
             Console.WriteLine("Options :");
-            Console.WriteLine("1. Add Employee");
-            Console.WriteLine("2. Display All");
-            Console.WriteLine("3. Display One");
-            Console.WriteLine("4. Edit Employee");
-            Console.WriteLine("5. Delete Employees");
-            Console.WriteLine("6. Go Back");
+            DisplayMenus(_employeeDisplayMenu);
             Console.Write("Choose any option from above:");
             int option;
             int.TryParse(Console.ReadLine(), out option);
             switch (option)
             {
+                case 0:
+                    flag = false;
+                    break;
                 case 1:
                     _employeeManagement.AddEmployee();
                     break;
@@ -111,9 +124,6 @@ namespace Presentation.Services
                 case 5:
                     _employeeManagement.DeleteEmployee();
                     break;
-                case 6:
-                    flag = false;
-                    break;
                 default:
                     Console.WriteLine("Select option from the above list only\n");
                     break;
@@ -127,7 +137,7 @@ namespace Presentation.Services
             bool flag = true;
             while (flag)
             {
-                if (EmployeeManagement.EmployeeList.Count < 1)
+                if (_employeeManager.GetAll().Count< 1)
                 {
                     flag = EmployeeDisplayDefaultMenu();
                 }
@@ -145,23 +155,22 @@ namespace Presentation.Services
             {
 
                 Console.WriteLine("Options :");
-                Console.WriteLine("1. Add Role");
-                Console.WriteLine("2. Display All");
-                Console.WriteLine("3. Go Back");
+                DisplayMenus(_roleDisplaymenu);
                 Console.Write("Choose any option from above:");
                 int option;
                 int.TryParse(Console.ReadLine(), out option);
                 switch (option)
                 {
+                    case 0:
+                        flag = false;
+                        break;
                     case 1:
                         _roleManagement.AddRole();
                         break;
                     case 2:
                         _roleManagement.DisplayAll();
                         break;
-                    case 3:
-                        flag = false;
-                        break;
+                    
                     default:
                         Console.WriteLine("Select option from the above list only\n");
                         break;
@@ -174,24 +183,32 @@ namespace Presentation.Services
             while (flag)
             {
                 Console.WriteLine("Options:");
-                Console.WriteLine("1. Add Department");
-                Console.WriteLine("2. Add Location");
-                Console.WriteLine("3. Go Back");
+                DisplayMenus(_departmentLocationDisplaymenu);
                 int option;
                 Console.Write("Choose any option from above:");
                 int.TryParse(Console.ReadLine(), out option);
                 switch (option)
                 {
+                    case 0:
+                        flag = false;
+                        break;
                     case 1:
-                        DepartmentModel deptModel = new DepartmentModel();
-                        _departmentManager.AddDepartment(deptModel, ref StartApp.DepartmentList);
+                        _departmentManagement.AddDepartment();
                         break;
                     case 2:
-                        LocationModel locModel = new LocationModel();
-                        _locationManager.AddLocation(locModel, ref StartApp.LocationList);
+                        _departmentManagement.DisplayAll();
                         break;
                     case 3:
-                        flag = false;
+                        _locationManagement.AddLocation();
+                        break;
+                    case 4:
+                        _locationManagement.DisplayAll();
+                        break;
+                    case 5:
+                        _projectManagement.AddProject();
+                        break;
+                    case 6:
+                        _projectManagement.DisplayAll();
                         break;
                     default:
                         Console.WriteLine("Select option from the above list only\n");

@@ -12,17 +12,26 @@ namespace LocationManagementLibrary
             _locationOperations = locationOperations;
         }
 
-        public void AddLocation(LocationModel location, ref List<LocationModel> locationList)
+        public bool AddLocation(LocationModel location)
         {
-            Console.Write("Enter new Location:");
-            string loc = Console.ReadLine().ToUpper();
-            if (!CheckLocationExists(loc, locationList))
+            List<LocationModel> locationList = _locationOperations.read();
+
+            if (!CheckLocationExists(location.Name, locationList))
             {
-                location.Name = loc;
+                location.Id=locationList.Count+1;
                 locationList.Add(location);
-                Console.WriteLine("Location Added Successfully");
                 _locationOperations.write(locationList);
+                return true;
             }
+            else
+            {
+                return false;
+            }
+        }
+
+        public List<LocationModel> GetAll()
+        {
+            return _locationOperations.read();
         }
         public static bool CheckLocationExists(string loc, List<LocationModel> locationList)
         {

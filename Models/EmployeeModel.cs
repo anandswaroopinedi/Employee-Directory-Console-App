@@ -1,12 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Models
+﻿namespace Models
 {
     public class EmployeeModel
     {
-        [Required(ErrorMessage = "ID is Required")]
         public string Id { get; set; }
-        [Required(ErrorMessage = "First Name is Required")]
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string DateOfBirth { get; set; }
@@ -18,7 +14,7 @@ namespace Models
         public string Department { get; set; }
         public string ManagerId { get; set; }
         public string Project { get; set; }
-        public static string[] Headers = { "Id", "FirstName", "LastName", "Date Of Birth", "Email", "MobileNumber", "JoinDate", "Location", "JobTitle", "Department", "ManagerId", "Project" };
+        public static string[] Headers = { "Exit","FirstName", "LastName", "Date Of Birth", "Email", "MobileNumber", "JoinDate", "JobTitle", "Location", "Department", "ManagerId", "Project" };
 
     }
 }

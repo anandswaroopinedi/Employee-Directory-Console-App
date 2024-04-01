@@ -2,7 +2,7 @@
 {
     public interface IRoleManagement
     {
-        public void AddRole();
+        public string AddRole();
         public void DisplayAll();
     }
 }

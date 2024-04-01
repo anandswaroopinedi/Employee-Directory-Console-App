@@ -3,15 +3,13 @@ using DepartmentManagementLibrary.Interfaces;
 using Models;
 namespace DepartmentManagementLibrary
 {
-
-
     public class DepartmentManager : IDepartmentManager
     {
 
-        private readonly IDepartmentOperations _departmentHandler;
+        private readonly IDepartmentOperations _departmentOperations;
         public DepartmentManager(IDepartmentOperations departmentHandler)
         {
-            _departmentHandler = departmentHandler;
+            _departmentOperations = departmentHandler;
         }
 
         public static bool CheckDepartmentExists(string name, List<DepartmentModel> departmentList)
@@ -23,17 +21,27 @@ namespace DepartmentManagementLibrary
             }
             return false;
         }
-        public void AddDepartment(DepartmentModel dept, ref List<DepartmentModel> departmentList)
+        public bool AddDepartment(DepartmentModel dept)
         {
-            Console.Write("Enter New DepartMent Name:");
-            string name = Console.ReadLine().ToUpper();
-            if (!CheckDepartmentExists(name, departmentList))
+            
+            List<DepartmentModel>departmentList= _departmentOperations.read();
+            if (!CheckDepartmentExists(dept.Name, departmentList))
             {
-                dept.Name = name;
+                dept.Id=departmentList.Count+1;
                 departmentList.Add(dept);
-                Console.WriteLine("Department Added Successfully");
-                _departmentHandler.write(departmentList);
+
+                _departmentOperations.write(departmentList);
+                return true;
             }
+            else
+            {
+                return false;
+            }
+        }
+
+        public List<DepartmentModel> GetAll()
+        {
+            return _departmentOperations.read();
         }
     }
 }

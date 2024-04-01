@@ -14,26 +14,53 @@ namespace BusinessLogicLayer
         {
             _employeeOperations = employeeOperations;
         }
-        public void Create(EmployeeModel employee, ref List<EmployeeModel> employeeList)
+        public void Create(EmployeeModel employee)
         {
+            List<EmployeeModel> employeeList = _employeeOperations.read();
             employeeList.Add(employee);
             _employeeOperations.write(employeeList);
         }
-        public void Update(EmployeeModel employee, ref List<EmployeeModel> employeeList)
+        public void Update(EmployeeModel employee, int index)
         {
+            List<EmployeeModel> employeeList = _employeeOperations.read();
+            employeeList[index] = employee;
             _employeeOperations.write(employeeList);
         }
-        public void Delete(EmployeeModel e, ref List<EmployeeModel> employeeList)
+        public bool Delete(string id)
         {
-            employeeList.Remove(e);
+            int index = CheckIdExists(id);
+            if (index == -1)
+            {
+                return false;
+            }
+            else
+            {
+                List<EmployeeModel> employeeList = _employeeOperations.read();
+                for (int i = 0; i < employeeList.Count; i++)
+                {
+                    if (employeeList[i].ManagerId == employeeList[index].Id)
+                    {
+                        employeeList[i].ManagerId = "None";
+                    }
+                }
+                employeeList.Remove(employeeList[index]);
+                _employeeOperations.write(employeeList);
+                return true;
+            }
+        }
+        public  int CheckIdExists(string id)
+        {
+            List<EmployeeModel>employeeList= _employeeOperations.read();
             for (int i = 0; i < employeeList.Count; i++)
             {
-                if (employeeList[i].ManagerId == e.Id)
-                {
-                    employeeList[i].ManagerId = "None";
-                }
+                if (employeeList[i].Id == id)
+                    return i;
             }
-            _employeeOperations.write(employeeList);
+            return -1;
+        }
+        public  List<EmployeeModel>GetAll()
+        {
+            return _employeeOperations.read();
         }
 
     }

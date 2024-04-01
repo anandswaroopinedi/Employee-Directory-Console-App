@@ -1,4 +1,5 @@
 ﻿
+using DataAccessLayer;
 using DataAccessLayer.Interface;
 using DepartmentManagementLibrary.Interfaces;
 using Models;
@@ -7,52 +8,54 @@ namespace DepartmentManagementLibrary
     public class DepartmentPropertyEntryManager : IDepartmentPropertyEntryManager
     {
         private readonly IDepartmentManager _departmentManager;
-        private readonly IDepartmentOperations _departmentOperations;
-        public DepartmentPropertyEntryManager(IDepartmentManager departmentManager, IDepartmentOperations departmentOperations)
+        public DepartmentPropertyEntryManager(IDepartmentManager departmentManager)
         {
             _departmentManager = departmentManager;
-            _departmentOperations = departmentOperations;
         }
 
         public static void DisplayDepartmentList(List<DepartmentModel> departmentList)
         {
             for (int i = 0; i < departmentList.Count; i++)
             {
-                Console.WriteLine($"{i + 1}.  {departmentList[i].Name}");
+                Console.WriteLine($"{i + 2}.  {departmentList[i].Name}");
             }
         }
-        public string CreateDepartmentRef(ref List<DepartmentModel> departmentList)
+        public string CreateDepartmentRef()
         {
             DepartmentModel departmentModel = new DepartmentModel();
-            _departmentManager.AddDepartment(departmentModel, ref departmentList);
-            _departmentOperations.write(departmentList);
+            Console.Write("Enter New DepartMent Name:");
+            string name = Console.ReadLine().ToUpper();
+            departmentModel.Name = name;
+            _departmentManager.AddDepartment(departmentModel);
+            Console.WriteLine("Department Added successfully");
             return departmentModel.Name;
         }
-        public string ChooseDepartment(ref List<DepartmentModel> departmentList)
+        public string ChooseDepartment()
         {
+            List<DepartmentModel> departmentList = _departmentManager.GetAll();
             int option;
             Console.WriteLine("Departments:");
-            Console.WriteLine("0. Add New Department");
+            Console.WriteLine("0.Exit");
+            Console.WriteLine("1. Add New Department");
             DisplayDepartmentList(departmentList);
-            Console.WriteLine($"{departmentList.Count+1}. Exit");
             Console.Write("Choose Department from above options*:");
             int.TryParse(Console.ReadLine(), out option);
-            if (option == departmentList.Count+1)
+            if (option == 0)
             {
                 return "Abort";
             }
-            if (option == 0)
+            if (option == 1)
             {
-                return this.CreateDepartmentRef(ref departmentList);
+                return this.CreateDepartmentRef();
             }
-            if (option > 0 && option <= departmentList.Count)
+            if (option > 1 && option <= departmentList.Count+1)
             {
-                return departmentList[option - 1].Name;
+                return departmentList[option - 2].Name;
             }
             else
             {
                 Console.WriteLine("Select option from the above list only");
-                return ChooseDepartment(ref departmentList);
+                return ChooseDepartment();
             }
         }
     }

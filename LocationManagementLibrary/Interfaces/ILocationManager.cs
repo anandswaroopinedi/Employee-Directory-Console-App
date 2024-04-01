@@ -4,6 +4,7 @@ namespace LocationManagementLibrary.Interfaces
 {
     public interface ILocationManager
     {
-        public void AddLocation(LocationModel location, ref List<LocationModel> locationList);
+        public bool AddLocation(LocationModel location);
+        public List<LocationModel> GetAll();
     }
 }

@@ -8,40 +8,29 @@ namespace Presentation.Services
 {
     public sealed class RoleManagement : IRoleManagement
     {
-        public static List<RolesModel> RoleList = new List<RolesModel>();
-        private readonly IRoleManager _role;
+
+        private readonly IRoleManager _roleManager;
         private readonly IDepartmentPropertyEntryManager _departmentPropertyEntryManager;
         private readonly ILocationPropertyEntryManager _locationPropertyEntryManager;
         private readonly IRolePropertyEntryManager _rolePropertyEntryManager;
-        public RoleManagement(IRoleManager role, ILocationPropertyEntryManager locationPropertyEntryManager, IDepartmentPropertyEntryManager departmentPropertyEntryManager, IRolePropertyEntryManager rolePropertyEntryManager)
+        public RoleManagement(IRoleManager roleManager, ILocationPropertyEntryManager locationPropertyEntryManager, IDepartmentPropertyEntryManager departmentPropertyEntryManager, IRolePropertyEntryManager rolePropertyEntryManager)
         {
-            _role = role;
+            _roleManager = roleManager;
             _departmentPropertyEntryManager = departmentPropertyEntryManager;
             _locationPropertyEntryManager = locationPropertyEntryManager;
             _rolePropertyEntryManager = rolePropertyEntryManager;
         }
-        public static bool CheckRoleExists(string roleName)
-        {
-            
-            for (int i = 0; i < RoleList.Count; i++)
-            {
-                if (RoleList[i].Name == roleName)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
+
         private bool GetRoleDetailsInput(RolesModel role)
         {
             Console.WriteLine("Roles");
-            role.Department = _departmentPropertyEntryManager.ChooseDepartment(ref StartApp.DepartmentList);
+            role.Department = _departmentPropertyEntryManager.ChooseDepartment();
             if (role.Department == "Abort")
             {
                 return false;
             }
             Console.WriteLine("Roles");
-            role.Location = _locationPropertyEntryManager.ChooseLocation(ref StartApp.LocationList);
+            role.Location = _locationPropertyEntryManager.ChooseLocation();
             if(role.Location=="Abort")
             {
                 return false;
@@ -53,51 +42,58 @@ namespace Presentation.Services
             }
             return true;
         }
-        public void AddRole()
+        public string AddRole()
         {
-            
-            Console.WriteLine("0. Enter New Role:");
-            Console.WriteLine("1. Exit");
+            Console.WriteLine("0. Exit");
+            Console.WriteLine("1. Enter New Role:");
             Console.Write("Choose option from above:");
             int.TryParse(Console.ReadLine(), out int option);
-            if (option == 1)
+            if (option == 0)
             {
-                return;
+                return "Abort";
             }
-            else if (option == 0)
+            else if (option == 1)
             {
                 Console.Write("Enter Role Name:");
                 string roleName = Console.ReadLine()!.ToUpper();
-                if (!CheckRoleExists(roleName))
+                if (!_roleManager.CheckRoleExists(roleName))
                 {
                     RolesModel roleModel = new RolesModel();
                     roleModel.Name = roleName;
                     bool result = GetRoleDetailsInput(roleModel);
                     if (result)
                     {
-                        _role.AddRole(roleModel, ref RoleList);
+                        _roleManager.AddRole(roleModel);
+                        
                         Console.WriteLine("RoleList Added Successfully");
+                        return roleName;
                     }
                     else
                     {
                         Console.WriteLine("Failed to Add Role");
+                        return "failed";
                     }
                 }
                 else
                 {
                     Console.WriteLine("Role Exists Previously in the database so u can't add again");
+                    return "failed";
                 }
             }
             else
-            { Console.WriteLine("Choose from above options only."); }
+            { 
+                Console.WriteLine("Choose from above options only.");
+                return AddRole();
+            }
         }
         public void DisplayAll()
         {
+            List<RolesModel> roleList = _roleManager.GetAll();
             Console.WriteLine("{0,-18} {1,-18} {2,-12} {3,-18}", "Role Name", "Department", "Location", "Description");
-            for (int i = 0; i < RoleList.Count; i++)
+            for (int i = 0; i < roleList.Count; i++)
             {
                 Console.WriteLine(new string('-', 66));
-                Console.WriteLine("{0,-18} {1,-18} {2,-12} {3,-18}", RoleList[i].Name, RoleList[i].Department, RoleList[i].Location, RoleList[i].Description);
+                Console.WriteLine("{0,-18} {1,-18} {2,-12} {3,-18}", roleList[i].Name, roleList[i].Department, roleList[i].Location, roleList[i].Description);
             }
         }
 

@@ -12,10 +12,27 @@ namespace BusinessLogicLayer
             _roleOperations = roleOperations;
         }
 
-        public void AddRole(RolesModel role, ref List<RolesModel> roleList)
+        public void AddRole(RolesModel role)
         {
+            List<RolesModel> roleList = _roleOperations.read();
             roleList.Add(role);
             _roleOperations.write(roleList);
+        }
+        public  bool CheckRoleExists(string roleName)
+        {
+            List<RolesModel> roleList = _roleOperations.read();
+            for (int i = 0; i < roleList.Count; i++)
+            {
+                if (roleList[i].Name == roleName)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        public List<RolesModel> GetAll()
+        {
+            return _roleOperations.read();
         }
     }
 }

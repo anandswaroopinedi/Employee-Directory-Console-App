@@ -4,6 +4,7 @@ namespace DepartmentManagementLibrary.Interfaces
 {
     public interface IDepartmentManager
     {
-        public void AddDepartment(DepartmentModel dept, ref List<DepartmentModel> departmentList);
+        public bool AddDepartment(DepartmentModel dept);
+        public List<DepartmentModel> GetAll();
     }
 }
