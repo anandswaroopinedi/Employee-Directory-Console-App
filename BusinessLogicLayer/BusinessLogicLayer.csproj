@@ -8,10 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj" />
-    <ProjectReference Include="..\DepartmentManagementLibrary\DepartmentManagementLibrary.csproj" />
-    <ProjectReference Include="..\LocationManagementLibrary\LocationManagementLibrary.csproj" />
     <ProjectReference Include="..\Models\Models.csproj" />
-    <ProjectReference Include="..\ProjectManagementLibrary\ProjectManagementLibrary.csproj" />
   </ItemGroup>
 
 </Project>

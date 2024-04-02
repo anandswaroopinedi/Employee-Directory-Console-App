@@ -1,11 +1,5 @@
 ﻿using BusinessLogicLayer.Interfaces;
-using DepartmentManagementLibrary.Interfaces;
-using LocationManagementLibrary;
-using LocationManagementLibrary.Interfaces;
-using Models;
 using Presentation.Interfaces;
-using ProjectManagementLibrary;
-using ProjectManagementLibrary.Interfaces;
 
 namespace Presentation.Services
 {

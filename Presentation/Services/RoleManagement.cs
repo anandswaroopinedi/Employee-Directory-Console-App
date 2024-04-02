@@ -1,6 +1,4 @@
 ﻿using BusinessLogicLayer.Interfaces;
-using DepartmentManagementLibrary.Interfaces;
-using LocationManagementLibrary.Interfaces;
 using Models;
 using Presentation.Interfaces;
 
@@ -25,7 +23,7 @@ namespace Presentation.Services
             _departmentManager = departmentManager;
         }
 
-        private bool GetRoleDetailsInput(RolesModel role)
+        private bool GetRoleDetailsInput(Roles role)
         {
             Console.WriteLine("Roles");
             role.DepartmentId = _departmentPropertyEntryManager.ChooseDepartment();
@@ -62,13 +60,11 @@ namespace Presentation.Services
                 string roleName = Console.ReadLine()!.ToUpper();
                 if (!_roleManager.CheckRoleExists(roleName))
                 {
-                    RolesModel roleModel = new RolesModel();
+                    Roles roleModel = new Roles();
                     roleModel.Name = roleName;
                     bool result = GetRoleDetailsInput(roleModel);
-                    if (result)
+                    if (result && _roleManager.AddRole(roleModel))
                     {
-                        _roleManager.AddRole(roleModel);
-
                         Console.WriteLine($"RoleList Added Successfully with Id:{roleModel.Id}");
                         return roleModel.Id;
                     }
@@ -77,6 +73,7 @@ namespace Presentation.Services
                         Console.WriteLine("Failed to Add Role");
                         return -1;
                     }
+                   
                 }
                 else
                 {
@@ -92,7 +89,7 @@ namespace Presentation.Services
         }
         public void DisplayAll()
         {
-            List<RolesModel> roleList = _roleManager.GetAll();
+            List<Roles> roleList = _roleManager.GetAll();
             Console.WriteLine("{0,-18} {1,-18} {2,-12} {3,-18}", "Role Name", "Department", "Location", "Description");
             for (int i = 0; i < roleList.Count; i++)
             {

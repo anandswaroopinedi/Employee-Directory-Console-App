@@ -1,11 +1,6 @@
 ﻿using BusinessLogicLayer.Interfaces;
-using DepartmentManagementLibrary.Interfaces;
-using LocationManagementLibrary.Interfaces;
 using Models;
 using Presentation.Interfaces;
-using ProjectManagementLibrary.Interfaces;
-using System;
-using Validations;
 
 namespace Presentation.Services
 {
@@ -17,7 +12,7 @@ namespace Presentation.Services
         private readonly ILocationManager _locationManager;
         private readonly IDepartmentManager _departmentManager;
         private readonly IRoleManager _roleManager;
-        private string _OutputFormat = "{0,-8} {1,-18} {2,-12} {3,-18} {4,-12} {5,-12} {6,-12} {7,-12} {8,-12} {9,-15} {10,-12}";
+        private string _OutputFormat = "{0,-8} {1,-18} {2,-12} {3,-18} {4,-24} {5,-12} {6,-12} {7,-12} {8,-12} {9,-15} {10,-12}";
         public EmployeeManagement(IEmployeeManager employee, IEmployeePropertyEntryManager employeePropertyEntryManager, IDepartmentManager departmentManager, ILocationManager locationManager, IProjectManager projectManager, IRoleManager roleManager)
         {
             _employeeManager = employee;
@@ -27,7 +22,7 @@ namespace Presentation.Services
             _departmentManager = departmentManager;
             _roleManager = roleManager;
         }
-        public bool GetUpdateDetails(EmployeeModel employee, List<EmployeeModel> employeeList)
+        public bool GetUpdateDetails(Employee employee, List<Employee> employeeList)
         {
             _employeePropertyEntryManager.DisplayHeaders();
             Console.Write("\nChoose the details to change:");
@@ -202,7 +197,7 @@ namespace Presentation.Services
             return res;
         }
         //To Record the details of employee for update.
-        public static string GetManagerName(EmployeeModel e, List<EmployeeModel> employeeList)
+        public static string GetManagerName(Employee e, List<Employee> employeeList)
         {
             for (int i = 0; i < employeeList.Count; i++)
             {
@@ -213,16 +208,16 @@ namespace Presentation.Services
             }
             return "NO MANAGER";
         }
-        public static void DisplayEmployeeID(List<EmployeeModel> employeeList)
+        public static void DisplayEmployeeID(List<Employee> employeeList)
         {
             for (int i = 0; i < employeeList.Count; i++)
             {
-                Console.WriteLine( $"{i + 1}. {employeeList[i].Id}");
+                Console.WriteLine($"{i + 1}. {employeeList[i].Id}");
             }
         }
         public void UpdateEmployee()
         {
-            List<EmployeeModel> employeeList = _employeeManager.GetAll();
+            List<Employee> employeeList = _employeeManager.GetAll();
             Console.WriteLine("Employee Id's:");
             Console.WriteLine("0. Exit");
             DisplayEmployeeID(employeeList);
@@ -235,9 +230,8 @@ namespace Presentation.Services
             if (index > 0 && index <= employeeList.Count)
             {
                 bool res = GetUpdateDetails(employeeList[index - 1], employeeList);
-                if (res)
+                if (res && _employeeManager.Update(employeeList[index - 1], index - 1))
                 {
-                    _employeeManager.Update(employeeList[index - 1], index - 1);
                     string managerName = GetManagerName(employeeList[index - 1], employeeList);
                     Console.WriteLine(_OutputFormat, "Id", "Full Name", "DateOfBirth", "Email", "MobileNumber", "JoinDate", "JobTitle", "Location", "Department", "ManagerName", "Project");
                     Console.WriteLine(new string('-', 158));
@@ -260,7 +254,7 @@ namespace Presentation.Services
         public void DeleteEmployee()
         {
             Console.WriteLine("Employee Id's:");
-            List<EmployeeModel> employeeList = _employeeManager.GetAll();
+            List<Employee> employeeList = _employeeManager.GetAll();
             Console.WriteLine($"Exit");
             DisplayEmployeeID(employeeList);
             Console.Write("Enter Employee Id/Enter exit:");
@@ -282,7 +276,7 @@ namespace Presentation.Services
         //To Display Employee through their id
         public void DisplayOne()
         {
-            List<EmployeeModel> employeeList = _employeeManager.GetAll();
+            List<Employee> employeeList = _employeeManager.GetAll();
             Console.WriteLine("Employee Id's:");
             Console.WriteLine("0. Exit");
             DisplayEmployeeID(employeeList);
@@ -297,7 +291,7 @@ namespace Presentation.Services
                 if (employeeList[index - 1].Id != "None")
                 {
                     string managerName = GetManagerName(employeeList[index - 1], employeeList);
-                    Console.WriteLine("{0,-8} {1,-24} {2,-12} {3,-18} {4,-12} {5,-12} {6,-15} {7,-12}", "Id", "Full Name", "JoinDate", "JobTitle", "Location", "Department", "ManagerName", "Project");
+                    Console.WriteLine("{0,-8} {1,-24} {2,-12} {3,-18} {4,-24} {5,-12} {6,-15} {7,-12}", "Id", "Full Name", "JoinDate", "JobTitle", "Location", "Department", "ManagerName", "Project");
                     ConsoleEmployee(employeeList[index - 1], GetManagerName(employeeList[index - 1], employeeList));
                 }
                 else
@@ -310,22 +304,22 @@ namespace Presentation.Services
                 Console.WriteLine("Choose from above options only.");
             }
         }
-        private void ConsoleEmployee(EmployeeModel employee, string managerName)
+        private void ConsoleEmployee(Employee employee, string managerName)
         {
             Console.WriteLine(new string('-', 125));
-            Console.WriteLine("{0,-8} {1,-24} {2,-12} {3,-18} {4,-12} {5,-12} {6,-15} {7,-12} ", employee.Id, employee.FirstName + " " + employee.LastName, employee.JoinDate, _roleManager.GetRoleName(employee.JobTitleId), _locationManager.GetLocationName(employee.LocationId), _departmentManager.GetDepartmentName(employee.DepartmentId), managerName, _projectManager.GetProjectName(employee.ProjectId));
+            Console.WriteLine("{0,-8} {1,-24} {2,-12} {3,-18} {4,-24} {5,-12} {6,-15} {7,-12} ", employee.Id, employee.FirstName + " " + employee.LastName, employee.JoinDate, _roleManager.GetRoleName(employee.JobTitleId), _locationManager.GetLocationName(employee.LocationId), _departmentManager.GetDepartmentName(employee.DepartmentId), managerName, _projectManager.GetProjectName(employee.ProjectId));
         }
         public void DisplayAll()
         {
-            List<EmployeeModel> employeeList = _employeeManager.GetAll();
+            List<Employee> employeeList = _employeeManager.GetAll();
             Console.WriteLine($"\nNo of Employee records in the Database are: {employeeList.Count}");
-            Console.WriteLine("{0,-8} {1,-24} {2,-12} {3,-18} {4,-12} {5,-12} {6,-15} {7,-12} ", "Id", "Full Name", "JoinDate", "JobTitle", "Location", "Department", "ManagerName", "Project");
-            foreach (EmployeeModel employee in employeeList)
+            Console.WriteLine("{0,-8} {1,-24} {2,-12} {3,-18} {4,-24} {5,-12} {6,-15} {7,-12} ", "Id", "Full Name", "JoinDate", "JobTitle", "Location", "Department", "ManagerName", "Project");
+            foreach (Employee employee in employeeList)
             {
                 ConsoleEmployee(employee, GetManagerName(employee, employeeList));
             }
         }
-        private bool checkEmployeeExisits(EmployeeModel employee, List<EmployeeModel> employeeList)
+        private bool checkEmployeeExisits(Employee employee, List<Employee> employeeList)
         {
             for (int i = 0; i < employeeList.Count; i++)
             {
@@ -336,7 +330,7 @@ namespace Presentation.Services
             }
             return false;
         }
-        private bool GetEmployeeInputValues(EmployeeModel employee, List<EmployeeModel> employeeList)
+        private bool GetEmployeeInputValues(Employee employee, List<Employee> employeeList)
         {
             employee.FirstName = _employeePropertyEntryManager.GetFirstName();
             if (employee.FirstName == "Abort")
@@ -401,8 +395,8 @@ namespace Presentation.Services
         }
         public void AddEmployee()
         {
-            EmployeeModel emp = new EmployeeModel();
-            List<EmployeeModel> employeeList = _employeeManager.GetAll();
+            Employee emp = new Employee();
+            List<Employee> employeeList = _employeeManager.GetAll();
             bool addResult = GetEmployeeInputValues(emp, employeeList);
             if (addResult)
             {
@@ -419,8 +413,14 @@ namespace Presentation.Services
                 string newId = (prevId + 1).ToString();
                 newId = newId.PadLeft(4, '0');
                 emp.Id = "TZ" + newId;
-                _employeeManager.Create(emp);
-                Console.WriteLine($"Employee Added Successfully with id{emp.Id}");
+                if(_employeeManager.Create(emp))
+                {
+                    Console.WriteLine($"Employee Added Successfully with id{emp.Id}");
+                }
+                else
+                {
+                    Console.WriteLine("Employee Addition Unsuccessful");
+                }
                 return;
             }
             else

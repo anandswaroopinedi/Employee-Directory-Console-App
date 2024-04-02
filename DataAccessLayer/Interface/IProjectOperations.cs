@@ -4,7 +4,7 @@ namespace DataAccessLayer.Interface
 {
     public interface IProjectOperations
     {
-        public List<ProjectModel> read();
-        public void write(List<ProjectModel> deptList);
+        public List<Project> read();
+        public bool write(List<Project> deptList);
     }
 }

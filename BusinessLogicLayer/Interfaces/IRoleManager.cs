@@ -4,9 +4,9 @@ namespace BusinessLogicLayer.Interfaces
 {
     public interface IRoleManager
     {
-        public void AddRole(RolesModel rolesModel);
+        public bool AddRole(Roles rolesModel);
         public bool CheckRoleExists(string roleName);
-        public List<RolesModel> GetAll();
+        public List<Roles> GetAll();
         public string GetRoleName(int id);
     }
 }

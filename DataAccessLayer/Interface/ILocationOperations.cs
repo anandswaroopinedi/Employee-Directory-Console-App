@@ -4,7 +4,7 @@ namespace DataAccessLayer.Interface
 {
     public interface ILocationOperations
     {
-        public List<LocationModel> read();
-        public void write(List<LocationModel> locationsList);
+        public List<Location> read();
+        public bool write(List<Location> locationsList);
     }
 }

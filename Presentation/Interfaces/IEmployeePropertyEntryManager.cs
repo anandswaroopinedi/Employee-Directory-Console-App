@@ -12,8 +12,8 @@ namespace Presentation.Interfaces
         public string GetJoiningDate();
         public int ChooseProject();
         public int ChooseRole();
-        public int ChooseDepartment(EmployeeModel employee);
-        public int ChooseLocation(EmployeeModel employee);
-        public string ChooseManager(EmployeeModel employeeModel, List<EmployeeModel> employeeList);
+        public int ChooseDepartment(Employee employee);
+        public int ChooseLocation(Employee employee);
+        public string ChooseManager(Employee employeeModel, List<Employee> employeeList);
     }
 }

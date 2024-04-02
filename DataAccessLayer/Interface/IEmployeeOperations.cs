@@ -4,7 +4,7 @@ namespace DataAccessLayer.Interface
 {
     public interface IEmployeeOperations
     {
-        public List<EmployeeModel> read();
-        public void write(List<EmployeeModel> employeesList);
+        public List<Employee> read();
+        public bool write(List<Employee> employeesList);
     }
 }

@@ -1,16 +1,12 @@
-﻿using BusinessLogicLayer;
-using BusinessLogicLayer.Interfaces;
-using DataAccessLayer;
+﻿using BusinessLogicLayer.Interfaces;
+using BusinessLogicLayer.Managers;
 using DataAccessLayer.Interface;
+using DataAccessLayer.Services;
 using DepartmentManagementLibrary;
-using DepartmentManagementLibrary.Interfaces;
 using LocationManagementLibrary;
-using LocationManagementLibrary.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using Presentation.Interfaces;
 using Presentation.Services;
-using ProjectManagementLibrary;
-using ProjectManagementLibrary.Interfaces;
 
 namespace EmployeeDirectoryConsoleApp
 {
