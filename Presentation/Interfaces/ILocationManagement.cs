@@ -2,8 +2,8 @@
 {
     public interface ILocationManagement
     {
-        public void AddLocation();
-        public void DisplayAll();
+        public Task AddLocation();
+        public Task DisplayAll();
 
     }
 }

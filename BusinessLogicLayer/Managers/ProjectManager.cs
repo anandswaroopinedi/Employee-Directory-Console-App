@@ -6,21 +6,22 @@ namespace BusinessLogicLayer.Managers
 {
     public class ProjectManager : IProjectManager
     {
-        private readonly IProjectOperations _projectOperations;
-        public ProjectManager(IProjectOperations projectOperations)
+        private readonly IDataOperations _dataOperations;
+        private static string filePath = @"C:\Users\anand.i\source\repos\Employee Directory Console App\Data\Repository\Project.json";
+        public ProjectManager(IDataOperations dataOperations)
         {
-            _projectOperations = projectOperations;
+            _dataOperations = dataOperations;
         }
 
-        public bool AddProject(Project project)
+        public async Task<bool> AddProject(Project project)
         {
-            List<Project> projectList = _projectOperations.read();
+            List<Project> projectList = GetAll().Result;
 
             if (!CheckProjectExists(project.Name, projectList))
             {
                 project.Id = projectList.Count + 1;
                 projectList.Add(project);
-                if (_projectOperations.write(projectList))
+                if (await _dataOperations.Write(projectList, filePath))
                 {
                     return true;
                 }
@@ -28,9 +29,9 @@ namespace BusinessLogicLayer.Managers
             return false;
         }
 
-        public List<Project> GetAll()
+        public async Task<List<Project>> GetAll()
         {
-            return _projectOperations.read();
+            return await _dataOperations.Read<Project>(filePath);
         }
         public static bool CheckProjectExists(string project, List<Project> projectList)
         {
@@ -43,9 +44,9 @@ namespace BusinessLogicLayer.Managers
             }
             return false;
         }
-        public string GetProjectName(int id)
+        public async Task<string> GetProjectName(int id)
         {
-            List<Project> projectList = _projectOperations.read();
+            List<Project> projectList = await GetAll();
             for (int i = 0; i < projectList.Count; i++)
             {
                 if (projectList[i].Id == id)

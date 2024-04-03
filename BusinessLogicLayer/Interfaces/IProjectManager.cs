@@ -4,8 +4,8 @@ namespace BusinessLogicLayer.Interfaces
 {
     public interface IProjectManager
     {
-        public bool AddProject(Project project);
-        public List<Project> GetAll();
-        public string GetProjectName(int id);
+        public Task<bool> AddProject(Project project);
+        public Task<List<Project>> GetAll();
+        public Task<string> GetProjectName(int id);
     }
 }

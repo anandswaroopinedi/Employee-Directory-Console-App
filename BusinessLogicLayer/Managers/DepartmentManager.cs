@@ -6,10 +6,11 @@ namespace BusinessLogicLayer.Managers
     public class DepartmentManager : IDepartmentManager
     {
 
-        private readonly IDepartmentOperations _departmentOperations;
-        public DepartmentManager(IDepartmentOperations departmentHandler)
+        private readonly IDataOperations _dataOperations;
+        private static string filePath = @"C:\Users\anand.i\source\repos\Employee Directory Console App\Data\Repository\Department.json";
+        public DepartmentManager(IDataOperations dataOperations)
         {
-            _departmentOperations = departmentHandler;
+            _dataOperations = dataOperations;
         }
 
         public static bool CheckDepartmentExists(string name, List<Department> departmentList)
@@ -21,9 +22,9 @@ namespace BusinessLogicLayer.Managers
             }
             return false;
         }
-        public string GetDepartmentName(int id)
+        public async Task<string> GetDepartmentName(int id)
         {
-            List<Department> departmentList = _departmentOperations.read();
+            List<Department> departmentList = await GetAll();
             for (int i = 0; i < departmentList.Count; i++)
             {
                 if (departmentList[i].Id == id)
@@ -33,16 +34,16 @@ namespace BusinessLogicLayer.Managers
             }
             return "None";
         }
-        public bool AddDepartment(Department dept)
+        public async Task<bool> AddDepartment(Department dept)
         {
 
-            List<Department> departmentList = _departmentOperations.read();
+            List<Department> departmentList = GetAll().Result;
             if (!CheckDepartmentExists(dept.Name, departmentList))
             {
                 dept.Id = departmentList.Count + 1;
                 departmentList.Add(dept);
                 Console.WriteLine(dept.Name);
-                if(_departmentOperations.write(departmentList))
+                if((await _dataOperations.Write(departmentList, filePath)))
                 {
                     return true;
                 }
@@ -50,9 +51,9 @@ namespace BusinessLogicLayer.Managers
             return false;
         }
 
-        public List<Department> GetAll()
+        public async Task<List<Department>> GetAll()
         {
-            return _departmentOperations.read();
+            return await _dataOperations.Read<Department>(filePath);
         }
     }
 }

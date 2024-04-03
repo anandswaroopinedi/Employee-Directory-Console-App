@@ -11,7 +11,7 @@ namespace Presentation.Services
         {
             _locationManager = locationManager;
         }
-        public void AddLocation()
+        public async Task AddLocation()
         {
             Console.WriteLine("0. Exit");
             Console.WriteLine("1. Enter Location");
@@ -29,7 +29,7 @@ namespace Presentation.Services
                 {
                     Location locationModel = new Location();
                     locationModel.Name = location;
-                    if (_locationManager.AddLocation(locationModel))
+                    if (await _locationManager.AddLocation(locationModel))
                     {
                         Console.WriteLine("Location Added Successfully");
                     }
@@ -48,9 +48,9 @@ namespace Presentation.Services
                 AddLocation();
             }
         }
-        public void DisplayAll()
+        public async Task DisplayAll()
         {
-            List<Location> locationList = _locationManager.GetAll();
+            List<Location> locationList = await _locationManager.GetAll();
             Console.WriteLine($"Locations(Count:{locationList.Count}):");
             for (int i = 0; i < locationList.Count; i++)
             {

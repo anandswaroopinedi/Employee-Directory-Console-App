@@ -2,6 +2,6 @@
 {
     public interface IDisplayMenuManagement
     {
-        public void StartAppDisplayOptionMenu();
+        public Task StartAppDisplayOptionMenu();
     }
 }

@@ -10,5 +10,9 @@
   {
     "Id": 3,
     "Name": "CONSOLE APP"
+  },
+  {
+    "Id": 4,
+    "Name": "TEZO WEBSITE"
   }
 ]

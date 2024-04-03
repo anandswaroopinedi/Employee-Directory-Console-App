@@ -7,6 +7,7 @@ using LocationManagementLibrary;
 using Microsoft.Extensions.DependencyInjection;
 using Presentation.Interfaces;
 using Presentation.Services;
+using System.Threading.Tasks;
 
 namespace EmployeeDirectoryConsoleApp
 {
@@ -15,7 +16,6 @@ namespace EmployeeDirectoryConsoleApp
     {
         public static void Main(String[] args)
         {
-
             var services = new ServiceCollection();
             services.AddTransient<IEmployeeManager, EmployeeManager>();
             services.AddTransient<IRoleManager, RoleManager>();
@@ -24,23 +24,20 @@ namespace EmployeeDirectoryConsoleApp
             services.AddTransient<IEmployeePropertyEntryManager, EmployeePropertyEntryManager>();
             services.AddTransient<IDepartmentManager, DepartmentManager>();
             services.AddTransient<ILocationManager, LocationManager>();
-            services.AddTransient<IEmployeeOperations, EmployeeOperations>();
-            services.AddTransient<IRoleOperations, RoleOperations>();
-            services.AddTransient<IDepartmentOperations, DepartmentOperations>();
-            services.AddTransient<ILocationOperations, LocationOperations>();
             services.AddTransient<ILocationPropertyEntryManager, LocationPropertyEntryManager>();
             services.AddTransient<IRolePropertyEntryManager, RolePropertyEntryManager>();
             services.AddTransient<IDepartmentPropertyEntryManager, DepartmentPropertyEntryManager>();
-            services.AddTransient<IProjectOperations, ProjectOperations>();
             services.AddTransient<IProjectManagement, ProjectManagement>();
             services.AddTransient<IProjectManager, ProjectManager>();
             services.AddTransient<IDepartmentManagement, DepartmentManagement>();
             services.AddTransient<ILocationManagement, LocationManagement>();
+            services.AddTransient<IDataOperations, DataOperations>();
             services.AddSingleton<StartApp>();
             services.AddTransient<IDisplayMenuManagement, DisplayMenuManagement>();
             var serviceProvider = services.BuildServiceProvider();
             var startApp = serviceProvider.GetRequiredService<StartApp>();
-            startApp.Run();
+            var myTask = Task.Run(() => startApp.Run());
+            myTask.Wait();
         }
     }
 }

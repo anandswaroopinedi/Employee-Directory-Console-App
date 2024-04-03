@@ -11,7 +11,7 @@ namespace Presentation.Services
         {
             _departmentManager = departmentManager;
         }
-        public void AddDepartment()
+        public async Task AddDepartment()
         {
             Console.WriteLine("0. Exit");
             Console.WriteLine("1. Enter Department");
@@ -29,7 +29,7 @@ namespace Presentation.Services
                 {
                     Department departmentModel = new Department { Name = department };
 
-                    if (_departmentManager.AddDepartment(departmentModel))
+                    if (await _departmentManager.AddDepartment(departmentModel))
                     {
                         Console.WriteLine("Department Added Successfully");
                     }
@@ -44,9 +44,9 @@ namespace Presentation.Services
                 }
             }
         }
-        public void DisplayAll()
+        public async Task DisplayAll()
         {
-            List<Department> departmentList = _departmentManager.GetAll();
+            List<Department> departmentList =await _departmentManager.GetAll();
             Console.WriteLine($"Department List(Count:{departmentList.Count}):");
             for (int i = 0; i < departmentList.Count; i++)
             {

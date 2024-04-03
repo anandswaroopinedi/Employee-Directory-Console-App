@@ -2,7 +2,7 @@
 {
     public interface IProjectManagement
     {
-        public int AddProject();
-        public void DisplayAll();
+        public Task<int> AddProject();
+        public Task DisplayAll();
     }
 }

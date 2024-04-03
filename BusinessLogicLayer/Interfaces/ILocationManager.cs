@@ -4,8 +4,8 @@ namespace BusinessLogicLayer.Interfaces
 {
     public interface ILocationManager
     {
-        public bool AddLocation(Location location);
-        public List<Location> GetAll();
-        public string GetLocationName(int id);
+        public Task<bool> AddLocation(Location location);
+        public Task<List<Location>> GetAll();
+        public Task<string> GetLocationName(int id);
     }
 }

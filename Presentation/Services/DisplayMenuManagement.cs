@@ -1,4 +1,5 @@
 ﻿using BusinessLogicLayer.Interfaces;
+using Models;
 using Presentation.Interfaces;
 
 namespace Presentation.Services
@@ -24,20 +25,21 @@ namespace Presentation.Services
             _employeeManager = employeeManager;
             _projectManagement = projectManagement;
         }
-        private static void DisplayMenus(List<string> menu)
+        private async static Task DisplayMenus(List<string> menu)
         {
+
             for (int i = 0; i < menu.Count; i++)
             {
                 Console.WriteLine($"{i}. {menu[i]}");
             }
         }
-        public void StartAppDisplayOptionMenu()
+        public async Task StartAppDisplayOptionMenu()
         {
             Console.WriteLine("Welcome to Employee Directory Console App");
             bool flag = true;
             while (flag)
             {
-                DisplayMenus(_startAppDisplayMenu);
+                await DisplayMenus(_startAppDisplayMenu);
                 Console.Write("Choose any option from above:");
                 int option;
                 int.TryParse(Console.ReadLine(), out option);
@@ -47,13 +49,13 @@ namespace Presentation.Services
                         flag = false;
                         break;
                     case 1:
-                        this.EmployeeManagementDisplayMenu();
+                        await this.EmployeeManagementDisplayMenu();
                         break;
                     case 2:
-                        this.RoleManagementDisplayMenu();
+                        await this.RoleManagementDisplayMenu();
                         break;
                     case 3:
-                        this.DepartmentLocationDisplayMenu();
+                        await this.DepartmentLocationDisplayMenu();
                         break;
 
                     default:
@@ -63,7 +65,7 @@ namespace Presentation.Services
             }
             Console.WriteLine("Thank You for visiting our application");
         }
-        private bool EmployeeDisplayDefaultMenu()
+        private async Task<bool> EmployeeDisplayDefaultMenu()
         {
             bool flag = true;
             Console.WriteLine("Options :");
@@ -78,7 +80,7 @@ namespace Presentation.Services
                     flag = false;
                     break;
                 case 1:
-                    _employeeManagement.AddEmployee();
+                    await _employeeManagement.AddEmployee();
                     break;
 
                 default:
@@ -89,34 +91,36 @@ namespace Presentation.Services
         }
         //Displaying Menu When Employee Json has more than 1 employee count
 
-        private bool EmployeeDisplayAdjustedMenu()
+        private async Task<bool> EmployeeDisplayAdjustedMenu()
         {
             bool flag = true;
 
             Console.WriteLine("Options :");
-            DisplayMenus(_employeeDisplayMenu);
+            await DisplayMenus(_employeeDisplayMenu);
             Console.Write("Choose any option from above:");
             int option;
             int.TryParse(Console.ReadLine(), out option);
+            
+            
             switch (option)
             {
                 case 0:
                     flag = false;
                     break;
                 case 1:
-                    _employeeManagement.AddEmployee();
+                   await _employeeManagement.AddEmployee();
                     break;
                 case 2:
-                    _employeeManagement.DisplayAll();
+                    await  _employeeManagement.DisplayAll();
                     break;
                 case 3:
-                    _employeeManagement.DisplayOne();
+                    await _employeeManagement.DisplayOne();
                     break;
                 case 4:
-                    _employeeManagement.UpdateEmployee();
+                    await  _employeeManagement.UpdateEmployee();
                     break;
                 case 5:
-                    _employeeManagement.DeleteEmployee();
+                    await  _employeeManagement.DeleteEmployee();
                     break;
                 default:
                     Console.WriteLine("Select option from the above list only\n");
@@ -125,31 +129,32 @@ namespace Presentation.Services
             return flag;
         }
         //To Display Menu
-        private void EmployeeManagementDisplayMenu()
+        private async Task EmployeeManagementDisplayMenu()
         {
 
             bool flag = true;
             while (flag)
             {
-                if (_employeeManager.GetAll().Count < 1)
+                List<Employee> employeeList = await _employeeManager.GetAll();
+                if (employeeList.Count < 1)
                 {
-                    flag = EmployeeDisplayDefaultMenu();
+                    flag = await EmployeeDisplayDefaultMenu();
                 }
 
                 else
                 {
-                    flag = EmployeeDisplayAdjustedMenu();
+                    flag = await EmployeeDisplayAdjustedMenu();
                 }
             }
         }
-        private void RoleManagementDisplayMenu()
+        private async Task RoleManagementDisplayMenu()
         {
             bool flag = true;
             while (flag)
             {
 
                 Console.WriteLine("Options :");
-                DisplayMenus(_roleDisplaymenu);
+                await DisplayMenus(_roleDisplaymenu);
                 Console.Write("Choose any option from above:");
                 int option;
                 int.TryParse(Console.ReadLine(), out option);
@@ -159,10 +164,10 @@ namespace Presentation.Services
                         flag = false;
                         break;
                     case 1:
-                        _roleManagement.AddRole();
+                        await _roleManagement.AddRole();
                         break;
                     case 2:
-                        _roleManagement.DisplayAll();
+                        await  _roleManagement.DisplayAll();
                         break;
 
                     default:
@@ -171,13 +176,13 @@ namespace Presentation.Services
                 }
             }
         }
-        private void DepartmentLocationDisplayMenu()
+        private async Task DepartmentLocationDisplayMenu()
         {
             bool flag = true;
             while (flag)
             {
                 Console.WriteLine("Options:");
-                DisplayMenus(_departmentLocationDisplaymenu);
+                await DisplayMenus(_departmentLocationDisplaymenu);
                 int option;
                 Console.Write("Choose any option from above:");
                 int.TryParse(Console.ReadLine(), out option);
@@ -187,22 +192,22 @@ namespace Presentation.Services
                         flag = false;
                         break;
                     case 1:
-                        _departmentManagement.AddDepartment();
+                        await  _departmentManagement.AddDepartment();
                         break;
                     case 2:
-                        _departmentManagement.DisplayAll();
+                        await _departmentManagement.DisplayAll();
                         break;
                     case 3:
-                        _locationManagement.AddLocation();
+                        await _locationManagement.AddLocation();
                         break;
                     case 4:
-                        _locationManagement.DisplayAll();
+                        await _locationManagement.DisplayAll();
                         break;
                     case 5:
-                        _projectManagement.AddProject();
+                        await _projectManagement.AddProject();
                         break;
                     case 6:
-                        _projectManagement.DisplayAll();
+                        await _projectManagement.DisplayAll();
                         break;
                     default:
                         Console.WriteLine("Select option from the above list only\n");
