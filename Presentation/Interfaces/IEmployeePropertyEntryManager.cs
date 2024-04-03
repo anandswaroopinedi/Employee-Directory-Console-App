@@ -10,10 +10,10 @@ namespace Presentation.Interfaces
         public string GetDateOfBirth();
         public string GetMobileNo();
         public string GetJoiningDate();
-        public int ChooseProject();
-        public int ChooseRole();
-        public int ChooseDepartment(Employee employee);
-        public int ChooseLocation(Employee employee);
+        public Task<int> ChooseProject();
+        public Task<int> ChooseRole();
+        public Task<int> ChooseDepartment(Employee employee);
+        public Task<int> ChooseLocation(Employee employee);
         public string ChooseManager(Employee employeeModel, List<Employee> employeeList);
     }
 }

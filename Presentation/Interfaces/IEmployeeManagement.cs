@@ -2,10 +2,10 @@
 {
     public interface IEmployeeManagement
     {
-        public void AddEmployee();
-        public void DisplayAll();
-        public void DisplayOne();
-        public void UpdateEmployee();
-        public void DeleteEmployee();
+        public Task AddEmployee();
+        public Task DisplayAll();
+        public Task DisplayOne();
+        public Task UpdateEmployee();
+        public Task DeleteEmployee();
     }
 }

@@ -11,7 +11,7 @@ namespace Presentation.Services
         {
             _projectManager = projectManager;
         }
-        public int AddProject()
+        public async Task<int> AddProject()
         {
             Console.WriteLine("0. Exit");
             Console.WriteLine("1. Enter Project");
@@ -29,7 +29,7 @@ namespace Presentation.Services
                 {
                     Project projectModel = new Project();
                     projectModel.Name = project;
-                    if (_projectManager.AddProject(projectModel))
+                    if (await _projectManager.AddProject(projectModel))
                     {
                         Console.WriteLine("Project Added Successfully");
                         return projectModel.Id;
@@ -43,17 +43,17 @@ namespace Presentation.Services
                 else
                 {
                     Console.WriteLine("Project can't be null");
-                    return AddProject();
+                    return await AddProject();
                 }
             }
             else
             {
-                return AddProject();
+                return await AddProject();
             }
         }
-        public void DisplayAll()
+        public async Task DisplayAll()
         {
-            List<Project> projectList = _projectManager.GetAll();
+            List<Project> projectList =await _projectManager.GetAll();
             Console.WriteLine($"Projects(Count:{projectList.Count}):");
             for (int i = 0; i < projectList.Count; i++)
             {

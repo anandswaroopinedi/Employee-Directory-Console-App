@@ -4,6 +4,6 @@ namespace Presentation.Interfaces
 {
     public interface ILocationPropertyEntryManager
     {
-        public int ChooseLocation();
+        public Task<int> ChooseLocation();
     }
 }

@@ -2,7 +2,7 @@
 {
     public interface IRoleManagement
     {
-        public int AddRole();
-        public void DisplayAll();
+        public Task<int> AddRole();
+        public Task DisplayAll();
     }
 }

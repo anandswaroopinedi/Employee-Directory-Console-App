@@ -1,19 +1,5 @@
 [
   {
-    "Id": "TZ0001",
-    "FirstName": "AYUSH",
-    "LastName": "K",
-    "DateOfBirth": "NONE",
-    "Email": "AYUSH@GMAIL.COM",
-    "MobileNumber": "NONE",
-    "JoinDate": "22/03/2000",
-    "JobTitleId": 1,
-    "LocationId": 1,
-    "DepartmentId": 1,
-    "ManagerId": "TZ0002",
-    "ProjectId": 2
-  },
-  {
     "Id": "TZ0002",
     "FirstName": "ANAND",
     "LastName": "INEDI",
@@ -24,21 +10,7 @@
     "JobTitleId": 4,
     "LocationId": 2,
     "DepartmentId": 1,
-    "ManagerId": "NONE",
-    "ProjectId": 3
-  },
-  {
-    "Id": "TZ0003",
-    "FirstName": "PREM",
-    "LastName": "B",
-    "DateOfBirth": "NONE",
-    "Email": "PREM@GMAIL.COM",
-    "MobileNumber": "NONE",
-    "JoinDate": "22/02/2000",
-    "JobTitleId": 4,
-    "LocationId": 2,
-    "DepartmentId": 1,
-    "ManagerId": "NONE",
+    "ManagerId": "TZ0004",
     "ProjectId": 3
   },
   {
@@ -54,5 +26,19 @@
     "DepartmentId": 1,
     "ManagerId": "NONE",
     "ProjectId": 1
+  },
+  {
+    "Id": "TZ0005",
+    "FirstName": "JAGADEESH",
+    "LastName": "INEDI",
+    "DateOfBirth": "NONE",
+    "Email": "JAGADEESH@GMAIL.COM",
+    "MobileNumber": "NONE",
+    "JoinDate": "22/02/1999",
+    "JobTitleId": 4,
+    "LocationId": 2,
+    "DepartmentId": 1,
+    "ManagerId": "NONE",
+    "ProjectId": 2
   }
 ]

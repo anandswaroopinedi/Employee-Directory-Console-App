@@ -9,9 +9,9 @@ namespace Presentation.Services
         {
             _displayMenuManagement = displayMenuManagement;
         }
-        public void Run()
+        public async Task Run()
         {
-            _displayMenuManagement.StartAppDisplayOptionMenu();
+            await _displayMenuManagement.StartAppDisplayOptionMenu();
         }
     }
 }

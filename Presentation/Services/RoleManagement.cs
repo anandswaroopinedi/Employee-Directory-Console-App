@@ -23,16 +23,16 @@ namespace Presentation.Services
             _departmentManager = departmentManager;
         }
 
-        private bool GetRoleDetailsInput(Roles role)
+        private async Task<bool> GetRoleDetailsInput(Roles role)
         {
             Console.WriteLine("Roles");
-            role.DepartmentId = _departmentPropertyEntryManager.ChooseDepartment();
+            role.DepartmentId = await _departmentPropertyEntryManager.ChooseDepartment();
             if (role.DepartmentId == 0)
             {
                 return false;
             }
             Console.WriteLine("Roles");
-            role.LocationId = _locationPropertyEntryManager.ChooseLocation();
+            role.LocationId =await _locationPropertyEntryManager.ChooseLocation();
             if (role.LocationId == 0)
             {
                 return false;
@@ -44,7 +44,7 @@ namespace Presentation.Services
             }
             return true;
         }
-        public int AddRole()
+        public async Task<int> AddRole()
         {
             Console.WriteLine("0. Exit");
             Console.WriteLine("1. Enter New Role:");
@@ -58,12 +58,12 @@ namespace Presentation.Services
             {
                 Console.Write("Enter Role Name:");
                 string roleName = Console.ReadLine()!.ToUpper();
-                if (!_roleManager.CheckRoleExists(roleName))
+                if (!await _roleManager.CheckRoleExists(roleName))
                 {
                     Roles roleModel = new Roles();
                     roleModel.Name = roleName;
-                    bool result = GetRoleDetailsInput(roleModel);
-                    if (result && _roleManager.AddRole(roleModel))
+                    bool result = await GetRoleDetailsInput(roleModel);
+                    if (result && await _roleManager.AddRole(roleModel))
                     {
                         Console.WriteLine($"RoleList Added Successfully with Id:{roleModel.Id}");
                         return roleModel.Id;
@@ -84,17 +84,17 @@ namespace Presentation.Services
             else
             {
                 Console.WriteLine("Choose from above options only.");
-                return AddRole();
+                return await AddRole();
             }
         }
-        public void DisplayAll()
+        public async Task DisplayAll()
         {
-            List<Roles> roleList = _roleManager.GetAll();
-            Console.WriteLine("{0,-18} {1,-18} {2,-12} {3,-18}", "Role Name", "Department", "Location", "Description");
+            List<Roles> roleList = await _roleManager.GetAll();
+            Console.WriteLine("{0,-24} {1,-18} {2,-12} {3,-18}", "Role Name", "Department", "Location", "Description");
             for (int i = 0; i < roleList.Count; i++)
             {
                 Console.WriteLine(new string('-', 66));
-                Console.WriteLine("{0,-18} {1,-18} {2,-12} {3,-18}", roleList[i].Name, _departmentManager.GetDepartmentName(roleList[i].DepartmentId), _locationManager.GetLocationName(roleList[i].LocationId), roleList[i].Description);
+                Console.WriteLine("{0,-24} {1,-18} {2,-12} {3,-18}", roleList[i].Name,await _departmentManager.GetDepartmentName(roleList[i].DepartmentId),await _locationManager.GetLocationName(roleList[i].LocationId), roleList[i].Description);
             }
         }
 

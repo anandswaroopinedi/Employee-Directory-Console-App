@@ -212,9 +212,9 @@ namespace Presentation.Services
                 return GetJoiningDate();
             }
         }
-        public int ChooseProject()
+        public async Task<int> ChooseProject()
         {
-            List<Project> projectList = _projectManager.GetAll();
+            List<Project> projectList =await _projectManager.GetAll();
             Console.WriteLine("Select Project:");
             Console.WriteLine("0. Exit");
             Console.WriteLine("1. Add New Project");
@@ -231,18 +231,18 @@ namespace Presentation.Services
             }
             else if (option == 1)
             {
-                int result = _projectManagement.AddProject();
+                int result = await _projectManagement.AddProject();
                 if (result == 0)
                 {
                     return 0;
                 }
                 else if (result == -1)
                 {
-                    return ChooseProject();
+                    return await ChooseProject();
                 }
                 else
                 {
-                    projectList = _projectManager.GetAll();
+                    projectList = await _projectManager.GetAll();
                     return projectList[projectList.Count - 1].Id;
                 }
             }
@@ -254,7 +254,7 @@ namespace Presentation.Services
             {
                 Console.WriteLine("You can only choose from above list");
             }
-            return ChooseProject();
+            return await ChooseProject();
 
         }
         public static string DisplayEmployeeId(Employee employee, List<Employee> employeeList)
@@ -336,9 +336,9 @@ namespace Presentation.Services
                 Console.WriteLine($"{i + 2}. {rolesList[i].Name}");
             }
         }
-        public int ChooseRole()
+        public async Task<int> ChooseRole()
         {
-            List<Roles> rolesList = _roleManager.GetAll();
+            List<Roles> rolesList = await _roleManager.GetAll();
             int option;
             Console.WriteLine("Roles:");
             Console.WriteLine("0. Exit");
@@ -354,14 +354,14 @@ namespace Presentation.Services
             if (option == 1)
             {
                 /*RoleManagement roleManagement = new RoleManagement();*/
-                int result = _roleManagement.AddRole();
+                int result = await _roleManagement.AddRole();
                 if (result != 0)
                 {
                     return result;
                 }
                 else if (result == -1)
                 {
-                    return ChooseRole();
+                    return await ChooseRole();
                 }
                 else
                 {
@@ -375,7 +375,7 @@ namespace Presentation.Services
             else
             {
                 Console.WriteLine("Select option from the above list only");
-                return ChooseRole();
+                return await ChooseRole();
             }
         }
 
@@ -387,9 +387,9 @@ namespace Presentation.Services
                 Console.WriteLine("{0,-4}{1,-15}", $"{j}.", $"{Employee.Headers[j]}");
             }
         }
-        public int ChooseDepartment(Employee employee)
+        public async Task<int> ChooseDepartment(Employee employee)
         {
-            List<Roles> rolesList = _roleManager.GetAll();
+            List<Roles> rolesList = await _roleManager.GetAll();
             List<int> departmentIds = new List<int>();
             Console.WriteLine("Select Department:");
             Console.WriteLine("0. Exit");
@@ -398,7 +398,7 @@ namespace Presentation.Services
                 if (rolesList[j].Id == employee.JobTitleId)
                 {
                     departmentIds.Add(rolesList[j].DepartmentId);
-                    List<Department> deptList = _departmentManager.GetAll();
+                    List<Department> deptList = await _departmentManager.GetAll();
                     for (int k = 0; k < deptList.Count; k++)
                     {
                         if (rolesList[j].DepartmentId == deptList[k].Id)
@@ -424,11 +424,11 @@ namespace Presentation.Services
             {
                 Console.WriteLine("You can only choose from above list");
             }
-            return ChooseDepartment(employee);
+            return await ChooseDepartment(employee);
         }
-        public int ChooseLocation(Employee employee)
+        public async Task<int> ChooseLocation(Employee employee)
         {
-            List<Roles> rolesList = _roleManager.GetAll();
+            List<Roles> rolesList = await _roleManager.GetAll();
             List<int> locationIds = new List<int>();
             Console.WriteLine("Select Location:");
             Console.WriteLine("0. Exit");
@@ -437,7 +437,7 @@ namespace Presentation.Services
                 if (rolesList[j].Id == employee.JobTitleId)
                 {
                     locationIds.Add(rolesList[j].LocationId);
-                    List<Location> locationModels = _locationManager.GetAll();
+                    List<Location> locationModels = await _locationManager.GetAll();
                     for (int k = 0; k < locationModels.Count; k++)
                     {
                         if (locationModels[k].Id == rolesList[j].LocationId)
@@ -464,7 +464,7 @@ namespace Presentation.Services
             {
                 Console.WriteLine("You can only choose from above list");
             }
-            return ChooseLocation(employee);
+            return await ChooseLocation(employee);
         }
     }
 }

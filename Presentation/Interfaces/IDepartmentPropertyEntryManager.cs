@@ -2,6 +2,6 @@
 {
     public interface IDepartmentPropertyEntryManager
     {
-        public int ChooseDepartment();
+        public Task<int> ChooseDepartment();
     }
 }

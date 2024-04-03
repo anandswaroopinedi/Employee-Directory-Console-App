@@ -6,21 +6,22 @@ namespace BusinessLogicLayer.Managers
 {
     public class LocationManager : ILocationManager
     {
-        private readonly ILocationOperations _locationOperations;
-        public LocationManager(ILocationOperations locationOperations)
+        private readonly IDataOperations _dataOperations;
+        private static string filePath = @"C:\Users\anand.i\source\repos\Employee Directory Console App\Data\Repository\Location.json";
+        public LocationManager(IDataOperations dataOperations)
         {
-            _locationOperations = locationOperations;
+            _dataOperations = dataOperations;   
         }
 
-        public bool AddLocation(Location location)
+        public async Task<bool> AddLocation(Location location)
         {
-            List<Location> locationList = _locationOperations.read();
+            List<Location> locationList = _dataOperations.Read<Location>(filePath).Result;
 
             if (!CheckLocationExists(location.Name, locationList))
             {
                 location.Id = locationList.Count + 1;
                 locationList.Add(location);
-                if(_locationOperations.write(locationList))
+                if(await _dataOperations.Write(locationList, filePath))
                 {
                     return true;
                 }
@@ -28,13 +29,13 @@ namespace BusinessLogicLayer.Managers
                 return false;
         }
 
-        public List<Location> GetAll()
+        public async Task<List<Location>> GetAll()
         {
-            return _locationOperations.read();
+            return await _dataOperations.Read<Location>(filePath);
         }
-        public string GetLocationName(int id)
+        public async  Task<string> GetLocationName(int id)
         {
-            List<Location> locationList = _locationOperations.read();
+            List<Location> locationList = await GetAll();
             for (int i = 0; i < locationList.Count; i++)
             {
                 if (locationList[i].Id == id)

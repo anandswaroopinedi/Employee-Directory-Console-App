@@ -6,5 +6,9 @@
   {
     "Id": 2,
     "Name": "VIZAG"
+  },
+  {
+    "Id": 3,
+    "Name": "VIJAYAWADA"
   }
 ]

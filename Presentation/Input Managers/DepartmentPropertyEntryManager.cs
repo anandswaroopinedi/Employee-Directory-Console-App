@@ -18,9 +18,9 @@ namespace DepartmentManagementLibrary
                 Console.WriteLine($"{i + 2}.  {departmentList[i].Name}");
             }
         }
-        public int ChooseDepartment()
+        public async Task<int> ChooseDepartment()
         {
-            List<Department> departmentList = _departmentManager.GetAll();
+            List<Department> departmentList = await _departmentManager.GetAll();
             int option;
             Console.WriteLine("Departments:");
             Console.WriteLine("0.Exit");
@@ -38,7 +38,7 @@ namespace DepartmentManagementLibrary
                 Console.Write("Enter New DepartMent Name:");
                 string name = Console.ReadLine().ToUpper();
                 departmentModel.Name = name;
-                if (_departmentManager.AddDepartment(departmentModel))
+                if (await _departmentManager.AddDepartment(departmentModel))
                 {
                     Console.WriteLine("Department Added successfully");
                     return departmentModel.Id;
@@ -46,7 +46,7 @@ namespace DepartmentManagementLibrary
                 else
                 {
                     Console.WriteLine("Entered Department is previously exists in the database.");
-                    return ChooseDepartment();
+                    return await ChooseDepartment();
                 }
             }
             if (option > 1 && option <= departmentList.Count + 1)
@@ -56,7 +56,7 @@ namespace DepartmentManagementLibrary
             else
             {
                 Console.WriteLine("Select option from the above list only");
-                return ChooseDepartment();
+                return await ChooseDepartment();
             }
         }
     }

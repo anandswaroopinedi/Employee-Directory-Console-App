@@ -33,5 +33,26 @@
     "DepartmentId": 1,
     "LocationId": 1,
     "Description": "NONE"
+  },
+  {
+    "Id": 6,
+    "Name": "MANAGER",
+    "DepartmentId": 1,
+    "LocationId": 1,
+    "Description": "NONE"
+  },
+  {
+    "Id": 7,
+    "Name": "TESTING",
+    "DepartmentId": 6,
+    "LocationId": 1,
+    "Description": "NONE"
+  },
+  {
+    "Id": 8,
+    "Name": "ERT",
+    "DepartmentId": 1,
+    "LocationId": 2,
+    "Description": "NONE"
   }
 ]

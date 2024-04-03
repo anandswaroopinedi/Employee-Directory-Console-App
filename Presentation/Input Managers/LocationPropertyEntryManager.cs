@@ -20,9 +20,9 @@ namespace LocationManagementLibrary
                 Console.WriteLine($"{i + 2}.  {locationList[i].Name}");
             }
         }
-        public int ChooseLocation()
+        public async Task<int> ChooseLocation()
         {
-            List<Location> locationList = _locationManager.GetAll();
+            List<Location> locationList =await _locationManager.GetAll();
             Console.WriteLine("Locations:");
             Console.WriteLine("0. Exit");
             Console.WriteLine("1. Add New Location");
@@ -40,7 +40,7 @@ namespace LocationManagementLibrary
                 string location = Console.ReadLine().ToUpper();
                 Location locationModel = new Location();
                 locationModel.Name = location;
-                if (_locationManager.AddLocation(locationModel))
+                if (await _locationManager.AddLocation(locationModel))
                 {
                     Console.WriteLine("Location Added Successfully");
                     return locationModel.Id;
@@ -48,7 +48,7 @@ namespace LocationManagementLibrary
                 else
                 {
                     Console.WriteLine("Entered Location is previously exists in the database.");
-                    return ChooseLocation();
+                    return await ChooseLocation();
                 }
 
             }
@@ -59,7 +59,7 @@ namespace LocationManagementLibrary
             else
             {
                 Console.WriteLine("Select option from the above list only");
-                return ChooseLocation();
+                return await ChooseLocation();
             }
         }
     }

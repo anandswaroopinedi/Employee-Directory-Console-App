@@ -6,30 +6,27 @@ namespace BusinessLogicLayer.Managers
 {
     public class RoleManager : IRoleManager
     {
-        private readonly IRoleOperations _roleOperations;
-        private readonly ILocationOperations _locationOperations;
-        private readonly IDepartmentOperations _departmentOperations;
-        public RoleManager(IRoleOperations roleOperations, ILocationOperations locationOperations, IDepartmentOperations departmentOperations)
+        private readonly IDataOperations _dataOperations;
+        private static string filePath = @"C:\Users\anand.i\source\repos\Employee Directory Console App\Data\Repository\Role.json";
+        public RoleManager(IDataOperations dataOperations)
         {
-            _roleOperations = roleOperations;
-            _locationOperations = locationOperations;
-            _departmentOperations = departmentOperations;
+            _dataOperations = dataOperations;
         }
 
-        public bool AddRole(Roles role)
+        public async Task<bool> AddRole(Roles role)
         {
-            List<Roles> roleList = _roleOperations.read();
+            List<Roles> roleList = GetAll().Result;
             role.Id = roleList.Count + 1;
             roleList.Add(role);
-            if(_roleOperations.write(roleList))
+            if (await _dataOperations.Write(roleList, filePath))
             {
                 return true;
             }
             return false;
         }
-        public bool CheckRoleExists(string roleName)
+        public async Task<bool> CheckRoleExists(string roleName)
         {
-            List<Roles> roleList = _roleOperations.read();
+            List<Roles> roleList = await GetAll();
             for (int i = 0; i < roleList.Count; i++)
             {
                 if (roleList[i].Name == roleName)
@@ -39,13 +36,13 @@ namespace BusinessLogicLayer.Managers
             }
             return false;
         }
-        public List<Roles> GetAll()
+        public async Task<List<Roles>> GetAll()
         {
-            return _roleOperations.read();
+            return (await _dataOperations.Read<Roles>(filePath));
         }
-        public string GetRoleName(int id)
+        public async Task<string> GetRoleName(int id)
         {
-            List<Roles> rolesList = _roleOperations.read();
+            List<Roles> rolesList = await GetAll();
             for (int i = 0; i < rolesList.Count; i++)
             {
                 if (rolesList[i].Id == id)

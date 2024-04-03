@@ -4,8 +4,8 @@ namespace BusinessLogicLayer.Interfaces
 {
     public interface IDepartmentManager
     {
-        public bool AddDepartment(Department dept);
-        public List<Department> GetAll();
-        public string GetDepartmentName(int id);
+        public Task<bool> AddDepartment(Department dept);
+        public Task<List<Department>> GetAll();
+        public Task<string> GetDepartmentName(int id);
     }
 }

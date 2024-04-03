@@ -12,7 +12,7 @@ namespace Presentation.Services
         private readonly ILocationManager _locationManager;
         private readonly IDepartmentManager _departmentManager;
         private readonly IRoleManager _roleManager;
-        private string _OutputFormat = "{0,-8} {1,-18} {2,-12} {3,-18} {4,-24} {5,-12} {6,-12} {7,-12} {8,-12} {9,-15} {10,-12}";
+        private string _OutputFormat = "{0,-8} {1,-24} {2,-12} {3,-24} {4,-18} {5,-24} {6,-24} {7,-24}";
         public EmployeeManagement(IEmployeeManager employee, IEmployeePropertyEntryManager employeePropertyEntryManager, IDepartmentManager departmentManager, ILocationManager locationManager, IProjectManager projectManager, IRoleManager roleManager)
         {
             _employeeManager = employee;
@@ -22,7 +22,7 @@ namespace Presentation.Services
             _departmentManager = departmentManager;
             _roleManager = roleManager;
         }
-        public bool GetUpdateDetails(Employee employee, List<Employee> employeeList)
+        public async Task<bool> GetUpdateDetails(Employee employee, List<Employee> employeeList)
         {
             _employeePropertyEntryManager.DisplayHeaders();
             Console.Write("\nChoose the details to change:");
@@ -102,7 +102,7 @@ namespace Presentation.Services
                         }
                         break;
                     case 7:
-                        int roleId = _employeePropertyEntryManager.ChooseRole();
+                        int roleId =await _employeePropertyEntryManager.ChooseRole();
                         if (roleId == 0)
                         {
                             operation = false;
@@ -112,7 +112,7 @@ namespace Presentation.Services
                         {
                             employee.JobTitleId = roleId;
                         }
-                        int deptId = _employeePropertyEntryManager.ChooseDepartment(employee);
+                        int deptId = await _employeePropertyEntryManager.ChooseDepartment(employee);
                         if (deptId == 0)
                         {
                             operation = false;
@@ -122,7 +122,7 @@ namespace Presentation.Services
                         {
                             employee.DepartmentId = deptId;
                         }
-                        int locationId = _employeePropertyEntryManager.ChooseLocation(employee);
+                        int locationId = await _employeePropertyEntryManager.ChooseLocation(employee);
                         if (locationId == 0)
                         {
                             operation = false;
@@ -133,7 +133,7 @@ namespace Presentation.Services
                         }
                         break;
                     case 8:
-                        locationId = _employeePropertyEntryManager.ChooseLocation(employee);
+                        locationId = await _employeePropertyEntryManager.ChooseLocation(employee);
                         if (locationId == 0)
                         {
                             operation = false;
@@ -144,7 +144,7 @@ namespace Presentation.Services
                         }
                         break;
                     case 9:
-                        deptId = _employeePropertyEntryManager.ChooseDepartment(employee);
+                        deptId = await _employeePropertyEntryManager.ChooseDepartment(employee);
                         if (deptId == 0)
                         {
                             operation = false;
@@ -167,7 +167,7 @@ namespace Presentation.Services
                         }
                         break;
                     case 11:
-                        int projectId = _employeePropertyEntryManager.ChooseProject();
+                        int projectId = await _employeePropertyEntryManager.ChooseProject();
                         if (projectId == 0)
                         {
                             operation = false;
@@ -197,7 +197,7 @@ namespace Presentation.Services
             return res;
         }
         //To Record the details of employee for update.
-        public static string GetManagerName(Employee e, List<Employee> employeeList)
+        public static async Task<string> GetManagerName(Employee e, List<Employee> employeeList)
         {
             for (int i = 0; i < employeeList.Count; i++)
             {
@@ -208,19 +208,19 @@ namespace Presentation.Services
             }
             return "NO MANAGER";
         }
-        public static void DisplayEmployeeID(List<Employee> employeeList)
+        public static async Task DisplayEmployeeID(List<Employee> employeeList)
         {
             for (int i = 0; i < employeeList.Count; i++)
             {
                 Console.WriteLine($"{i + 1}. {employeeList[i].Id}");
             }
         }
-        public void UpdateEmployee()
+        public async Task UpdateEmployee()
         {
-            List<Employee> employeeList = _employeeManager.GetAll();
+            List<Employee> employeeList = await _employeeManager.GetAll();
             Console.WriteLine("Employee Id's:");
             Console.WriteLine("0. Exit");
-            DisplayEmployeeID(employeeList);
+            await DisplayEmployeeID(employeeList);
             Console.Write("Choose from the above list:");
             int.TryParse(Console.ReadLine(), out int index);
             if (index == 0)
@@ -229,13 +229,13 @@ namespace Presentation.Services
             }
             if (index > 0 && index <= employeeList.Count)
             {
-                bool res = GetUpdateDetails(employeeList[index - 1], employeeList);
-                if (res && _employeeManager.Update(employeeList[index - 1], index - 1))
+                bool res = await GetUpdateDetails(employeeList[index - 1], employeeList);
+                if (res && await _employeeManager.Update(employeeList[index - 1], index - 1))
                 {
-                    string managerName = GetManagerName(employeeList[index - 1], employeeList);
+                    string managerName = await GetManagerName(employeeList[index - 1], employeeList);
                     Console.WriteLine(_OutputFormat, "Id", "Full Name", "DateOfBirth", "Email", "MobileNumber", "JoinDate", "JobTitle", "Location", "Department", "ManagerName", "Project");
                     Console.WriteLine(new string('-', 158));
-                    Console.WriteLine(_OutputFormat, employeeList[index - 1].Id, employeeList[index - 1].FirstName + " " + employeeList[index - 1].LastName, employeeList[index - 1].DateOfBirth, employeeList[index - 1].Email, employeeList[index - 1].MobileNumber, employeeList[index - 1].JoinDate, _roleManager.GetRoleName(employeeList[index - 1].JobTitleId), _locationManager.GetLocationName(employeeList[index - 1].LocationId), _departmentManager.GetDepartmentName(employeeList[index - 1].DepartmentId), managerName, _projectManager.GetProjectName(employeeList[index - 1].ProjectId));
+                    Console.WriteLine(_OutputFormat, employeeList[index - 1].Id, employeeList[index - 1].FirstName + " " + employeeList[index - 1].LastName, employeeList[index - 1].DateOfBirth, employeeList[index - 1].Email, employeeList[index - 1].MobileNumber, employeeList[index - 1].JoinDate,await _roleManager.GetRoleName(employeeList[index - 1].JobTitleId),await _locationManager.GetLocationName(employeeList[index - 1].LocationId),await _departmentManager.GetDepartmentName(employeeList[index - 1].DepartmentId), managerName,await _projectManager.GetProjectName(employeeList[index - 1].ProjectId));
                     Console.WriteLine("Employee Updated successfully");
                 }
                 else
@@ -246,24 +246,24 @@ namespace Presentation.Services
             else
             {
                 Console.WriteLine("Choose from above options only.");
-                UpdateEmployee();
+                await UpdateEmployee();
             }
         }
         //To make the managerId's of employee that are containing the deleted id should be made default None
         //To Record the details of employee to perform deletion Operation
-        public void DeleteEmployee()
+        public async Task DeleteEmployee()
         {
             Console.WriteLine("Employee Id's:");
-            List<Employee> employeeList = _employeeManager.GetAll();
+            List<Employee> employeeList = await _employeeManager.GetAll();
             Console.WriteLine($"Exit");
-            DisplayEmployeeID(employeeList);
+            await DisplayEmployeeID(employeeList);
             Console.Write("Enter Employee Id/Enter exit:");
             string id = Console.ReadLine()!.ToUpper();
             if (id == "EXIT")
             {
                 return;
             }
-            if (_employeeManager.Delete(id))
+            if (await _employeeManager.Delete(id))
             {
 
                 Console.WriteLine("Employee deleted successfully");
@@ -274,12 +274,12 @@ namespace Presentation.Services
             }
         }
         //To Display Employee through their id
-        public void DisplayOne()
+        public async Task DisplayOne()
         {
-            List<Employee> employeeList = _employeeManager.GetAll();
+            List<Employee> employeeList = await _employeeManager.GetAll();
             Console.WriteLine("Employee Id's:");
             Console.WriteLine("0. Exit");
-            DisplayEmployeeID(employeeList);
+            await DisplayEmployeeID(employeeList);
             Console.Write("Choose from the above list:");
             int.TryParse(Console.ReadLine(), out int index);
             if (index == 0)
@@ -290,9 +290,9 @@ namespace Presentation.Services
             {
                 if (employeeList[index - 1].Id != "None")
                 {
-                    string managerName = GetManagerName(employeeList[index - 1], employeeList);
-                    Console.WriteLine("{0,-8} {1,-24} {2,-12} {3,-18} {4,-24} {5,-12} {6,-15} {7,-12}", "Id", "Full Name", "JoinDate", "JobTitle", "Location", "Department", "ManagerName", "Project");
-                    ConsoleEmployee(employeeList[index - 1], GetManagerName(employeeList[index - 1], employeeList));
+                    string managerName = await GetManagerName(employeeList[index - 1], employeeList);
+                    Console.WriteLine(_OutputFormat, "Id", "Full Name", "JoinDate", "JobTitle", "Location", "Department", "ManagerName", "Project");
+                    await ConsoleEmployee(employeeList[index - 1], managerName);
                 }
                 else
                 {
@@ -304,22 +304,22 @@ namespace Presentation.Services
                 Console.WriteLine("Choose from above options only.");
             }
         }
-        private void ConsoleEmployee(Employee employee, string managerName)
+        private async Task ConsoleEmployee(Employee employee, string managerName)
         {
-            Console.WriteLine(new string('-', 125));
-            Console.WriteLine("{0,-8} {1,-24} {2,-12} {3,-18} {4,-24} {5,-12} {6,-15} {7,-12} ", employee.Id, employee.FirstName + " " + employee.LastName, employee.JoinDate, _roleManager.GetRoleName(employee.JobTitleId), _locationManager.GetLocationName(employee.LocationId), _departmentManager.GetDepartmentName(employee.DepartmentId), managerName, _projectManager.GetProjectName(employee.ProjectId));
+            Console.WriteLine(new string('-', 155));
+            Console.WriteLine(_OutputFormat, employee.Id, employee.FirstName + " " + employee.LastName, employee.JoinDate, await _roleManager.GetRoleName(employee.JobTitleId),await _locationManager.GetLocationName(employee.LocationId),await _departmentManager.GetDepartmentName(employee.DepartmentId), managerName, await _projectManager.GetProjectName(employee.ProjectId));
         }
-        public void DisplayAll()
+        public async Task DisplayAll()
         {
-            List<Employee> employeeList = _employeeManager.GetAll();
+            List<Employee> employeeList =await _employeeManager.GetAll();
             Console.WriteLine($"\nNo of Employee records in the Database are: {employeeList.Count}");
-            Console.WriteLine("{0,-8} {1,-24} {2,-12} {3,-18} {4,-24} {5,-12} {6,-15} {7,-12} ", "Id", "Full Name", "JoinDate", "JobTitle", "Location", "Department", "ManagerName", "Project");
+            Console.WriteLine(_OutputFormat, "Id", "Full Name", "JoinDate", "JobTitle", "Location", "Department", "ManagerName", "Project");
             foreach (Employee employee in employeeList)
             {
-                ConsoleEmployee(employee, GetManagerName(employee, employeeList));
+                await ConsoleEmployee(employee, await GetManagerName(employee, employeeList));
             }
         }
-        private bool checkEmployeeExisits(Employee employee, List<Employee> employeeList)
+        private async Task<bool> checkEmployeeExisits(Employee employee, List<Employee> employeeList)
         {
             for (int i = 0; i < employeeList.Count; i++)
             {
@@ -330,7 +330,7 @@ namespace Presentation.Services
             }
             return false;
         }
-        private bool GetEmployeeInputValues(Employee employee, List<Employee> employeeList)
+        private async Task<bool> GetEmployeeInputValues(Employee employee, List<Employee> employeeList)
         {
             employee.FirstName = _employeePropertyEntryManager.GetFirstName();
             if (employee.FirstName == "Abort")
@@ -347,7 +347,7 @@ namespace Presentation.Services
             {
                 return false;
             }
-            if (checkEmployeeExisits(employee, employeeList))
+            if (await checkEmployeeExisits(employee, employeeList))
             {
                 return false;
             }
@@ -366,17 +366,17 @@ namespace Presentation.Services
             {
                 return false;
             }
-            employee.JobTitleId = _employeePropertyEntryManager.ChooseRole();
+            employee.JobTitleId = await _employeePropertyEntryManager.ChooseRole();
             if (employee.JobTitleId == 0)
             {
                 return false;
             }
-            employee.LocationId = _employeePropertyEntryManager.ChooseLocation(employee);
+            employee.LocationId = await _employeePropertyEntryManager.ChooseLocation(employee);
             if (employee.LocationId == 0)
             {
                 return false;
             }
-            employee.DepartmentId = _employeePropertyEntryManager.ChooseDepartment(employee);
+            employee.DepartmentId =await _employeePropertyEntryManager.ChooseDepartment(employee);
             if (employee.DepartmentId == 0)
             {
                 return false;
@@ -386,36 +386,40 @@ namespace Presentation.Services
             {
                 return false;
             }
-            employee.ProjectId = _employeePropertyEntryManager.ChooseProject();
+            employee.ProjectId =await _employeePropertyEntryManager.ChooseProject();
             if (employee.ProjectId == 0)
             {
                 return false;
             }
             return true;
         }
-        public void AddEmployee()
+        public  static async Task<string> GetNewEmployeeId(List<Employee> employeeList)
+        {
+            int prevId;
+            if (employeeList.Count == 0)
+            {
+                prevId = 0;
+            }
+            else
+            {
+                prevId = Int32.Parse((employeeList[employeeList.Count - 1].Id).Substring(2));
+            }
+
+            string newId = (prevId + 1).ToString();
+            newId = newId.PadLeft(4, '0');
+             return "TZ" + newId;
+        }
+        public async Task AddEmployee()
         {
             Employee emp = new Employee();
-            List<Employee> employeeList = _employeeManager.GetAll();
-            bool addResult = GetEmployeeInputValues(emp, employeeList);
+            List<Employee> employeeList = await _employeeManager.GetAll();
+            bool addResult = await GetEmployeeInputValues(emp, employeeList);
             if (addResult)
             {
-                int prevId;
-                if (employeeList.Count == 0)
+                emp.Id = await GetNewEmployeeId(employeeList);
+                if (await _employeeManager.Create(emp))
                 {
-                    prevId = 0;
-                }
-                else
-                {
-                    prevId = Int32.Parse((employeeList[employeeList.Count - 1].Id).Substring(2));
-                }
-
-                string newId = (prevId + 1).ToString();
-                newId = newId.PadLeft(4, '0');
-                emp.Id = "TZ" + newId;
-                if(_employeeManager.Create(emp))
-                {
-                    Console.WriteLine($"Employee Added Successfully with id{emp.Id}");
+                    Console.WriteLine($"Employee Added Successfully with id {emp.Id}");
                 }
                 else
                 {
@@ -428,8 +432,6 @@ namespace Presentation.Services
                 Console.WriteLine("Employee Exists previously in the Database");
                 return;
             }
-
-
         }
     }
 }
